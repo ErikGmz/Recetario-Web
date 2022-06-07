@@ -18,7 +18,7 @@
 				class="form-control" id="correo" required autocomplete="OFF" formControlName="correoElectronico">
         <div *ngIf="!datosRegistro.controls['correoElectronico']?.errors" class="valid-feedback">Correo electrónico correcto.</div>  
 				<div *ngIf="datosRegistro.controls['correoElectronico'].errors?.['required']" class="invalid-feedback">Correo electrónico obligatorio.</div>  
-        <div *ngIf="datosRegistro.controls['correoElectronico'].errors?.['email']" class="invalid-feedback">El formato del correo electrónico es inválido.</div>  
+        <div *ngIf="datosRegistro.controls['correoElectronico'].errors?.['pattern']" class="invalid-feedback">El formato del correo electrónico es inválido.</div>  
 			</div>
 
 			<div class="col-12 col-lg-6 mb-4">

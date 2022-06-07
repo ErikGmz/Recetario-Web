@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -11,7 +12,7 @@ export class AutenticacionService {
 
   constructor(public autenticacion: AngularFireAuth, 
   public router: Router, public baseDatos: AngularFirestore, 
-  public ngZone: NgZone) { 
+  public ngZone: NgZone, private httpClient: HttpClient) { 
     //Actualizar la información del usuario en el
     //localStorage cuando ocurra un inicio o cierre
     //de sesión.
@@ -40,7 +41,7 @@ export class AutenticacionService {
 
         //Cerrar la sesión automáticamente creada.
         setTimeout(() => {
-          alert("El usuario ha sido exitosamente registrado.");
+          alert("El usuario fue exitosamente registrado.");
           this.cerrarSesion(); 
           this.router.navigate(["/inicio-sesion"]);
         }, 1000);
@@ -51,12 +52,16 @@ export class AutenticacionService {
   }
 
   agregarUsuarioABaseDatos(nombreCompleto: string) {
-    this.baseDatos.collection("usuarios").add({
+    let datosUsuarioNuevo = {
       ID: this.datosUsuarioActual.uid,
       correoElectronico: this.datosUsuarioActual.email,
       nombreCompleto: nombreCompleto,
       nombreUsuario: this.datosUsuarioActual.displayName
-    });
+    }
+
+    this.httpClient.post("/api/agregar-usuario", datosUsuarioNuevo).subscribe((datos) => {
+      console.log(datos);
+    })
   }
 
   cerrarSesion() {

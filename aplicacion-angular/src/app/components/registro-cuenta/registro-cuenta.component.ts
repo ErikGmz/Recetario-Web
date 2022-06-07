@@ -16,7 +16,7 @@ export class RegistroCuentaComponent implements OnInit {
   ngOnInit(): void {
     this.datosRegistro = this.formBuilder.group({
       nombreCompleto: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(80)]),
-      correoElectronico: new FormControl("", [Validators.required, Validators.email]),
+      correoElectronico: new FormControl("", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       nombreUsuario: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
       clave: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
       primeraConfirmacionClave: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
