@@ -14,13 +14,17 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component';
 import { RegistroCuentaComponent } from './components/registro-cuenta/registro-cuenta.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
+import { AyudaComponent } from './components/ayuda/ayuda.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     InicioSesionComponent,
-    RegistroCuentaComponent
+    RegistroCuentaComponent,
+    ContactoComponent,
+    AyudaComponent
   ],
   imports: [
     BrowserModule,

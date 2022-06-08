@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 })
 export class AutenticacionService {
   datosUsuarioActual: any;
+  informacionAdicional = {
+    nombreCompleto: "",
+    permisos: ""
+  };
 
   constructor(public autenticacion: AngularFireAuth, 
   public router: Router, public baseDatos: AngularFirestore, 
@@ -44,7 +48,7 @@ export class AutenticacionService {
           alert("El usuario fue exitosamente registrado.");
           this.cerrarSesion(); 
           this.router.navigate(["/inicio-sesion"]);
-        }, 1000);
+        }, 500);
       })
       .catch(this.desplegarError);
     })
@@ -56,7 +60,8 @@ export class AutenticacionService {
       ID: this.datosUsuarioActual.uid,
       correoElectronico: this.datosUsuarioActual.email,
       nombreCompleto: nombreCompleto,
-      nombreUsuario: this.datosUsuarioActual.displayName
+      nombreUsuario: this.datosUsuarioActual.displayName,
+      permisos: "user"
     }
 
     this.httpClient.post("/api/agregar-usuario", datosUsuarioNuevo).subscribe((datos) => {
@@ -64,10 +69,36 @@ export class AutenticacionService {
     })
   }
 
+  obtenerUsuario(ID: string): any {
+    return this.httpClient.get("/api/obtener-usuario/" + ID);
+  }
+
+  obtenerUsuarios(): any {
+    this.httpClient.get("/api/obtener-usuarios");
+  }
+
+  iniciarSesion(correo: string, clave: string) {
+    this.autenticacion.signInWithEmailAndPassword(correo, clave)
+    .then((credencialUsuario) => {
+      //Cargar toda la información del usuario nuevo.
+      this.datosUsuarioActual = credencialUsuario.user;
+
+      this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
+        this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
+        this.informacionAdicional.permisos = datos.permisos;
+      });
+    })
+    .catch(this.desplegarError);
+  }
+
   cerrarSesion() {
     this.autenticacion.signOut().then(() => {
       localStorage.removeItem('datosUsuario');
       this.datosUsuarioActual = null;
+      this.informacionAdicional = {
+        nombreCompleto: "",
+        permisos: ""
+      };
     })
     .catch(this.desplegarError);
   }

@@ -1,5 +1,5 @@
-<div class="border border-2">
-	<h3 class="text-center py-3 bg-light border-bottom mb-0">Registro de usuario</h3>
+<div class="border border-2 mx-0 mx-lg-4">
+	<h3 class="text-center py-4 bg-light border-bottom mb-0">Registro de usuario</h3>
 	<form novalidate [formGroup]="datosRegistro" class="px-5 pt-5">
 		<div class="row">
 			<div class="col-12 col-lg-6 mb-4">
@@ -73,8 +73,8 @@
 		</div>
 
 		<button type="submit" class="btn btn-success mb-5" [disabled]="datosRegistro.invalid" 
-    (click)="autenticacionService.registrarUsuario(nombreCompleto.value.trim(), correoElectronico.value.trim(), nombreUsuario.value.trim(), clave.value)">
-      Registrar cuenta
-    </button>
+    	(click)="autenticacionService.registrarUsuario(nombreCompleto.value.trim(), correoElectronico.value.trim(), nombreUsuario.value.trim(), clave.value)">
+      		Registrar cuenta
+    	</button>
 	</form>
 </div>
