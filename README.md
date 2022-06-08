@@ -13,7 +13,7 @@
 - Ángel Gabriel Galindo López.
 - Erik Alejandro Gómez Martínez.
 - Mónica Lizeeth Lozano Velázquez.
-- Israel Alejandro Mora González.
+- Víctor Fernando Ramírez Padilla.
 - José Emmanuel Rodríguez López.
 
 ## Ejecución del proyecto (modo de desarrollo)
