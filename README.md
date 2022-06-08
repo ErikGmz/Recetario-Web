@@ -19,8 +19,9 @@
 ## Ejecución del proyecto (modo de desarrollo)
 _**Ejecución del servidor Node.**_
 
->_**1.** Abrir una terminal en el directorio del proyecto e introducir el siguiente comando:_
+>_**1.** Abrir una terminal en el directorio del proyecto e introducir los siguientes comandos:_
 >```
+>$ npm install
 >$ npm run dev
 >```
 
@@ -30,8 +31,9 @@ _**Ejecución de la aplicación Angular.**_
 >$ cd aplicacion-angular
 >```
 >
->_**2.** Iniciar la ejecución del proyecto mediante el siguiente comando:._
+>_**2.** Iniciar la ejecución del proyecto mediante los siguientes comandos:._
 >```
+>$ npm install
 >$ ng serve -o
 >```
 _**Es necesario ejecutar ambas tecnologías para el correcto funcionamiento de la aplicación.**_
