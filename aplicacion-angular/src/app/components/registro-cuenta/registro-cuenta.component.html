@@ -1,0 +1,80 @@
+<div class="border border-2 mx-0 mx-lg-4">
+	<h3 class="text-center py-4 bg-light border-bottom mb-0">Registro de usuario</h3>
+	<form novalidate [formGroup]="datosRegistro" class="px-5 pt-5">
+		<div class="row">
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="nombre-completo" class="form-label">Nombre completo<span class="text-danger"> *</span></label>
+				<input #nombreCompleto type="text" [ngClass]="{'is-invalid':!datosRegistro.get('nombreCompleto')?.valid && datosRegistro.controls['nombreCompleto'].dirty, 'is-valid':datosRegistro.get('nombreCompleto')?.valid}" 
+				class="form-control" id="nombre-completo" required autocomplete="OFF" formControlName="nombreCompleto">
+				<div *ngIf="!datosRegistro.controls['nombreCompleto']?.errors" class="valid-feedback">Nombre completo correcto.</div>
+				<div *ngIf="datosRegistro.controls['nombreCompleto'].errors?.['required']" class="invalid-feedback">Nombre completo obligatorio. </div>  
+				<div *ngIf="datosRegistro.controls['nombreCompleto'].errors?.['minlength']" class="invalid-feedback">El nombre completo debe tener mínimo 10 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['nombreCompleto'].errors?.['maxlength']" class="invalid-feedback">El nombre completo debe tener máximo 80 caracteres.</div>  
+			</div>
+
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="correo" class="form-label">Correo electrónico<span class="text-danger"> *</span></label>
+				<input #correoElectronico type="email" [ngClass]="{'is-invalid':!datosRegistro.get('correoElectronico')?.valid && datosRegistro.controls['correoElectronico'].dirty, 'is-valid':datosRegistro.get('correoElectronico')?.valid}" 
+				class="form-control" id="correo" required autocomplete="OFF" formControlName="correoElectronico">
+        		<div *ngIf="!datosRegistro.controls['correoElectronico']?.errors" class="valid-feedback">Correo electrónico correcto.</div>  
+				<div *ngIf="datosRegistro.controls['correoElectronico'].errors?.['required']" class="invalid-feedback">Correo electrónico obligatorio.</div>  
+        		<div *ngIf="datosRegistro.controls['correoElectronico'].errors?.['pattern']" class="invalid-feedback">El formato del correo electrónico es inválido.</div>  
+			</div>
+
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="nombre-usuario" class="form-label">Nombre de usuario<span class="text-danger"> *</span></label>
+				<input #nombreUsuario type="text" [ngClass]="{'is-invalid':!datosRegistro.get('nombreUsuario')?.valid && datosRegistro.controls['nombreUsuario'].dirty, 'is-valid':datosRegistro.get('nombreUsuario')?.valid}" 
+				class="form-control" id="nombre-usuario" required autocomplete="OFF" formControlName="nombreUsuario">
+				<div *ngIf="!datosRegistro.controls['nombreUsuario']?.errors" class="valid-feedback">Nombre de usuario correcto.</div> 
+				<div *ngIf="datosRegistro.controls['nombreUsuario'].errors?.['required']" class="invalid-feedback">Nombre de usuario obligatorio.</div>   
+				<div *ngIf="datosRegistro.controls['nombreUsuario'].errors?.['minlength']" class="invalid-feedback">El nombre de usuario debe tener mínimo 5 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['nombreUsuario'].errors?.['maxlength']" class="invalid-feedback">El nombre de usuario debe tener máximo 20 caracteres.</div>  
+			</div>
+
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="clave-original" class="form-label">Contraseña<span class="text-danger"> *</span></label>
+				<input #clave type="password" [ngClass]="{'is-invalid':!datosRegistro.get('clave')?.valid && datosRegistro.controls['clave'].dirty, 'is-valid':datosRegistro.get('clave')?.valid}" 
+				class="form-control" id="nombre-usuario" id="clave-original" required autocomplete="OFF" formControlName="clave">
+				<div *ngIf="!datosRegistro.controls['clave']?.errors" class="valid-feedback">Contraseña correcta.</div> 
+				<div *ngIf="datosRegistro.controls['clave'].errors?.['required']" class="invalid-feedback">Contraseña obligatoria.</div>   
+				<div *ngIf="datosRegistro.controls['clave'].errors?.['minlength']" class="invalid-feedback">La contraseña debe tener mínimo 8 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['clave'].errors?.['maxlength']" class="invalid-feedback">La contraseña debe tener máximo 20 caracteres.</div>  
+			</div>
+
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="clave-1era-confirmacion" class="form-label">Confirmar contraseña<span class="text-danger"> *</span></label>
+				<input type="password" class="form-control" [ngClass]="{'is-invalid':!datosRegistro.get('primeraConfirmacionClave')?.valid && datosRegistro.controls['primeraConfirmacionClave'].dirty, 'is-valid':datosRegistro.get('primeraConfirmacionClave')?.valid}"
+				id="clave-1era-confirmacion" required autocomplete="OFF" formControlName="primeraConfirmacionClave">
+				<div *ngIf="!datosRegistro.controls['primeraConfirmacionClave']?.errors" class="valid-feedback">Primera confirmación correcta.</div> 
+				<div *ngIf="datosRegistro.controls['primeraConfirmacionClave'].errors?.['required']" class="invalid-feedback">Primera confirmación obligatoria.</div>   
+				<div *ngIf="datosRegistro.controls['primeraConfirmacionClave'].errors?.['minlength']" class="invalid-feedback">La primera confirmación debe tener mínimo 8 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['primeraConfirmacionClave'].errors?.['maxlength']" class="invalid-feedback">La primera confirmación debe tener máximo 20 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['primeraConfirmacionClave'].errors?.['verificarConfirmacion']" class="invalid-feedback">La primera confirmación no concuerda con la contraseña.</div> 
+			</div>
+
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="clave-2nda-confirmacion" class="form-label">Volver a confirmar contraseña<span class="text-danger"> *</span></label>
+				<input type="password" [ngClass]="{'is-invalid':!datosRegistro.get('segundaConfirmacionClave')?.valid && datosRegistro.controls['segundaConfirmacionClave'].dirty, 'is-valid':datosRegistro.get('segundaConfirmacionClave')?.valid}"
+				class="form-control" id="clave-2nda-confirmacion" required autocomplete="OFF" formControlName="segundaConfirmacionClave">
+				<div *ngIf="!datosRegistro.controls['segundaConfirmacionClave']?.errors" class="valid-feedback">Segunda confirmación correcta. </div> 
+				<div *ngIf="datosRegistro.controls['segundaConfirmacionClave'].errors?.['required']" class="invalid-feedback">Segunda confirmación obligatoria. </div>   
+				<div *ngIf="datosRegistro.controls['segundaConfirmacionClave'].errors?.['minlength']" class="invalid-feedback">La segunda confirmación debe tener mínimo 8 caracteres. </div>  
+				<div *ngIf="datosRegistro.controls['segundaConfirmacionClave'].errors?.['maxlength']" class="invalid-feedback">La segunda confirmación debe tener máximo 20 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['segundaConfirmacionClave'].errors?.['verificarConfirmacion']" class="invalid-feedback">La segunda confirmación no concuerda con la contraseña.</div> 
+			</div>
+		</div>
+
+		<div class="mb-4 form-check">
+			<input type="checkbox" [ngClass]="{'is-invalid':!datosRegistro.get('confirmarVerificacion')?.valid && datosRegistro.controls['confirmarVerificacion'].dirty, 'is-valid':datosRegistro.get('confirmarVerificacion')?.valid}"
+			class="form-check-input" id="confirmacion" required formControlName="confirmarVerificacion" aria-describedby="textoVerificacion">
+			<label class="form-check-label" for="confirmacion">Confirmo que el correo electrónico es de mi propiedad.</label>
+			<div *ngIf="datosRegistro.controls['confirmarVerificacion'].errors?.['required'] && !datosRegistro.controls['confirmarVerificacion'].dirty" id="textoVerificacion" class="form-text">Casilla obligatoria.</div>   
+			<div *ngIf="datosRegistro.controls['confirmarVerificacion'].errors?.['required']" class="invalid-feedback">Es necesario confirmar la verificación del correo.</div>   
+		</div>
+
+		<button type="submit" class="btn btn-success mb-5" [disabled]="datosRegistro.invalid" 
+    	(click)="autenticacionService.registrarUsuario(nombreCompleto.value.trim(), correoElectronico.value.trim(), nombreUsuario.value.trim(), clave.value)">
+      		Registrar cuenta
+    	</button>
+	</form>
+</div>

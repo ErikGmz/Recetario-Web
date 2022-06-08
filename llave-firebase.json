@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "recetarioweb-fe2e5",
+  "private_key_id": "a1ec4b6cb9550081dfe73b7a45127fedee0a9c8f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDIa581QK1h6xX/\nb4v8qHc2JBkD30CIVE3bJs56ZfUekVMS9bUhFKAIEawST/kBk8oC3w0FsF77PHVU\nJ1h3+9Q5swmslkwKXjjfNrQq9sNxdvDsdAvMgTVi18WGcr8zzmXBgPpRYo6hyh9a\nKAXgF7pqw9mtmGwZ4N4XJkN2/0ayRuq5b4vodAssK1ZbMdEMQIF6caiI5bN/dHDN\nQWPCIYooQ7NCHtsgcFzP2eIpptiTIjAdCX3k+EA/VJQvmLuTegGHGs+K7EzjXL+u\nwA6QOfb1OMWEKCUwUiK3XSKfTKLBCmJxmZL1HwCFxvgfWQrcikb0UUqh/E7ycgyi\nd1eMWfhrAgMBAAECggEANWPqISMOLSgVj5r1FUUBoOQj39Kw28BtjyR628NedZqs\nIUBgVKQsb4nZp3UzddabeYFW9D2ER/RWoyjqGeh1pDtMJ/RP5HEuQFRP0aQz832G\nd88AN6XyBVdKsOLPiasBk3da96REL9hq2rcPvZ9Ek12CFwskPQ6Yy1zvmvstJ59g\n9QciOyaMjLLiOoJidQTrySV60/OUfRwwI37+YkZfdDRLIaWCO9d0P3c6uF6Gcfp6\n8ZuaDts27QFODib8AzwOksOEarSS+Hl0lf0bqb0Kes3jVITPrIcrpS9fSZ0+IVzL\n08nA/UV64a0SJ2jLvTYAxWRExVsRQEcikdykqApexQKBgQDqokxFoufxq3NuIAEM\nDoJl1s82jDb9obDUFIoOxEO+0XDDhxZGXK8oVaIVNF84xQQpZRAqGwUi6N4pSCrp\nJcns9gBxxnSjX7CvK/rmqflWj67gjwzAxqVJcjbn+YKaTx8BR4xzvwVAh8SBPc2q\nmMqIhlzJWjDAoGfnVhLtcBp/BwKBgQDaq7/cTYcATNro3QGVVjN2KZDOPhMy/j2m\nzMYORhRgD5157vny59ECwVQEerwPrdgoE5M++ZCcBLuoMoqYrHXoBa699Kp9dSYv\n8UjwwLnYYFAnzTpbv8X26Cd2Ei4g9AdENdMhtCeLwlScZcHZIm4qJAHcZYrHb7wN\nC5eAVlf+fQKBgQCD9jHFfIDM5+usxS0xlbt7AVxbRnLrJRQpwz9+XJ3pZSvxnDlH\n63rLyZW2LVVcvVnA2klEFRxHbQb92svfgtRVhGntk3soI3pgmvCq6HAGYhstyuaW\nSWLOswD0aN0uYk+CzbXNp2KRz4oSUisoxnQqYr8us531yIGHl15f0gvk4wKBgQCR\nmyGjWUBWs9Zkjp06Sm7z9JOGsZDpOJ/mzJ3o7UMt/9fVVIq88x2a3w7J+Mv3CMRR\nU0+N9HIVYZVvV1Awf033lKkZtaw849/stpbiMQLPELru9doxM85nLYjxNwPeT3/z\nLIANBj/68QiUJ7HfmuyORPG0Ry0UxdMLQLe97kCjpQKBgEbGFAXw0iAsp0UhGsLv\nf0w3NZ1dhX+F3z35pSMtJvwLObi/kxHlrVxBGZIPYTaS2+dXy+W0zmnVJyaa4n5M\nZPxm3tVI7CDAeBzjPtowzGpR9nfTS258/82VyRKoyWElEReoQcSbn1JJcCa6PxYY\nkoN/MiBk1sld6yzAg3DpZy3c\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-jqwh3@recetarioweb-fe2e5.iam.gserviceaccount.com",
+  "client_id": "103906431261931791416",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jqwh3%40recetarioweb-fe2e5.iam.gserviceaccount.com"
+}

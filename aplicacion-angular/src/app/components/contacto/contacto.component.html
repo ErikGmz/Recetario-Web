@@ -1,0 +1,31 @@
+<div class="border border-2 mx-0 mx-lg-5">
+  <h3 class="text-center py-4 bg-light border-bottom mb-0">Contacto</h3>
+  <form novalidate [formGroup]="datosCorreo" class="p-5">
+    <div class="row px-0 px-lg-5">
+      <div class="col-12 mb-4">
+        <h6 class="mb-3">Asunto<span class="text-danger"> *</span></h6>
+        <input #asunto type="text" [ngClass]="{'is-invalid':!datosCorreo.get('asunto')?.valid && datosCorreo.controls['asunto'].dirty, 'is-valid':datosCorreo.get('asunto')?.valid}" 
+        class="form-control mx-auto" id="asunto" required autocomplete="OFF" formControlName="asunto">
+        <div *ngIf="datosCorreo.controls['asunto'].errors?.['required']" class="invalid-feedback">Asunto obligatorio.</div>  
+        <div *ngIf="datosCorreo.controls['asunto'].errors?.['minlength']" class="invalid-feedback">El asunto debe tener mínimo 5 caracteres.</div>  
+        <div *ngIf="datosCorreo.controls['asunto'].errors?.['maxlength']" class="invalid-feedback">El asunto debe tener máximo 80 caracteres.</div>  
+      </div>
+
+      <div class="col-12 mb-4">
+        <h6 class="mb-3">Mensaje<span class="text-danger"> *</span></h6>
+        <textarea #mensaje type="text" [ngClass]="{'is-invalid':!datosCorreo.get('mensaje')?.valid && datosCorreo.controls['mensaje'].dirty, 'is-valid':datosCorreo.get('mensaje')?.valid}" 
+        class="form-control mx-auto" id="mensaje" required autocomplete="OFF" formControlName="mensaje" rows="10"></textarea>
+        <div *ngIf="datosCorreo.controls['mensaje'].errors?.['required']" class="invalid-feedback">Mensaje obligatorio.</div>  
+        <div *ngIf="datosCorreo.controls['mensaje'].errors?.['minlength']" class="invalid-feedback">El mensaje debe tener mínimo 10 caracteres.</div>  
+        <div *ngIf="datosCorreo.controls['mensaje'].errors?.['maxlength']" class="invalid-feedback">El mensaje debe tener máximo 2000 caracteres.</div>  
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-danger" [disabled]="datosCorreo.invalid"
+        (click)="enviarCorreo(asunto.value.trim(), mensaje.value.trim())">
+          Enviar correo
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
