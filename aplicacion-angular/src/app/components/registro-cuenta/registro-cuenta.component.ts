@@ -10,7 +10,8 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 export class RegistroCuentaComponent implements OnInit {
   datosRegistro!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, public autenticacionService: AutenticacionService) { 
+  constructor(private formBuilder: FormBuilder, 
+  public autenticacionService: AutenticacionService) { 
   }
 
   ngOnInit(): void {

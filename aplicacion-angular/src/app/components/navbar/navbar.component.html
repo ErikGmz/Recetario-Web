@@ -1,18 +1,49 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['/inicio-sesion']">Navbar</a>
+    <a class="navbar-brand" [routerLink]="['/']">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link text-center" aria-current="page" [routerLinkActive]="['active']" [routerLink]="['/inicio-sesion']">Iniciar sesión</a>
+      <ul class="navbar-nav me-auto mb-0">
+        <li class="nav-item dropdown text-center">
+          <a class="nav-link dropdown-toggle" id="cuenta" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cuenta
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="cuenta">
+            <ng-container *ngIf="autenticacion.informacionAdicional.permisos !== '' else usuarioInvitado">
+              <li><a class="dropdown-item" (click)="cerrarSesion()" href="#">Cerrar sesión</a></li>
+            </ng-container>
+
+            <ng-container *ngIf="autenticacion.informacionAdicional.permisos === 'Usuario'">
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="autenticacion.borrarUsuarioActual()" href="#">Borrar cuenta</a></li>
+            </ng-container>
+
+            <ng-template #usuarioInvitado>
+              <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/inicio-sesion']">Iniciar sesión</a></li>
+              <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/registro-cuenta']">Registrar cuenta</a></li>
+            </ng-template>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-center" [routerLinkActive]="['active']" [routerLink]="['/registro-cuenta']">Registrar cuenta</a>
+
+        <li class="nav-item dropdown text-center" *ngIf="autenticacion.informacionAdicional.permisos !== 'Administrador'">
+          <a class="nav-link dropdown-toggle" id="informacion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Información
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="informacion">
+            <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/ayuda']">Ayuda</a></li>
+            <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/contacto']">Contacto</a></li>
+          </ul>
         </li>
       </ul>
+
+      <div *ngIf="autenticacion.informacionAdicional.permisos !== ''"
+      class="d-flex justify-content-center mb-2 mb-lg-0" id="nombre">
+        <h5 class="mb-0 py-1"><span class="badge rounded-pill bg-danger">
+          {{autenticacion.datosUsuarioActual?.displayName}} - {{autenticacion.informacionAdicional?.permisos}}
+        </span></h5>
+      </div>
     </div>
   </div>
 </nav>
