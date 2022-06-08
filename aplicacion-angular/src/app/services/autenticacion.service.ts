@@ -3,12 +3,12 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { threadId } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacionService {
+  referenciaVentana: any;
   datosUsuarioActual: any;
   informacionAdicional = {
     nombreCompleto: "Invitado",
@@ -28,16 +28,21 @@ export class AutenticacionService {
         JSON.parse(localStorage.getItem('datosUsuario')!);
 
         this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
-          (datos?.nombreCompleto === undefined ? this.informacionAdicional.nombreCompleto = "Invitado"
-          : this.informacionAdicional.nombreCompleto = datos.nombreCompleto);
-
-          (datos?.permisos === undefined ? this.informacionAdicional.permisos = ""
-          : this.informacionAdicional.permisos = datos.permisos);
+          if(datos !== null) {
+            this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
+            this.informacionAdicional.permisos = datos.permisos;
+            localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
+            JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
+          }
         });
       } 
       else {
+        this.informacionAdicional.nombreCompleto = "Invitado";
+        this.informacionAdicional.permisos = "";
         localStorage.setItem('datosUsuario', 'null');
         JSON.parse(localStorage.getItem('datosUsuario')!);
+        localStorage.setItem('informacionExtraUsuario', 'null');
+        JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
       }
     });
   }
@@ -62,19 +67,67 @@ export class AutenticacionService {
     .catch(this.desplegarError);
   }
 
+  enviarMensajeTelefono(numeroTelefono: string) {
+    this.autenticacion.signInWithPhoneNumber(numeroTelefono, this.referenciaVentana.recaptchaVerifier)
+    .then((resultado) => {
+      alert("El código de verificación fue enviado al número " + numeroTelefono + ".");
+      this.referenciaVentana.confirmationResult = resultado;
+      this.referenciaVentana.recaptchaVerifier.clear();
+    })
+    .catch(this.desplegarError);
+  }
+
+  registrarUsuarioTelefono(nombreCompleto: string, nombreUsuario: string, codigoVerificacion: string) {
+    this.referenciaVentana.confirmationResult.confirm(codigoVerificacion)
+    .then((credencialUsuario: any) => {
+      //Almacenar el usuario nuevo si no se encontraba en la base de datos.
+      this.obtenerUsuario(credencialUsuario.user?.uid).subscribe((datos: any) => {
+        if(datos === null) {
+          //Completar los datos del perfil del usuario nuevo.
+          credencialUsuario.user?.updateProfile({displayName: nombreUsuario})
+          .then(() => {
+            this.agregarUsuarioABaseDatos(nombreCompleto);
+            this.informacionAdicional.nombreCompleto = nombreCompleto;
+            this.informacionAdicional.permisos = "Usuario";
+
+            //Almacenar y cargar toda la información del usuario nuevo.
+            this.datosUsuarioActual = credencialUsuario.user;
+          })
+          .catch(this.desplegarError);
+        }
+        else {
+          this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
+          this.informacionAdicional.permisos = datos.permisos;
+
+          //Almacenar y cargar toda la información del usuario nuevo.
+          this.datosUsuarioActual = credencialUsuario.user;
+        }
+      });
+
+      setTimeout(() => {
+        localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
+        localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
+        alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
+        this.router.navigate(['/']);
+      }, 1000);
+    })
+    .catch(this.desplegarError);
+  }
+
   agregarUsuarioABaseDatos(nombreCompleto: string) {
     //Obtener los datos del usuario actual y registrarlos en la base de datos.
     let datosUsuarioNuevo = {
       ID: this.datosUsuarioActual.uid,
-      correoElectronico: this.datosUsuarioActual.email,
+      correoElectronico: this.datosUsuarioActual?.email,
       nombreCompleto: nombreCompleto,
       nombreUsuario: this.datosUsuarioActual.displayName,
-      permisos: "Usuario"
+      permisos: "Usuario",
+      numeroTelefono: this.datosUsuarioActual?.phoneNumber
     }
 
-    this.httpClient.post("/api/usuarios/agregar", datosUsuarioNuevo).subscribe((datos) => {
+    this.httpClient.post("/api/usuarios/agregar", datosUsuarioNuevo, {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
-    })
+    });
   }
 
   borrarUsuarioActual() {
@@ -94,7 +147,7 @@ export class AutenticacionService {
   }
 
   eliminarUsuarioBaseDatos(ID: string) {
-    this.httpClient.delete("/api/usuarios/eliminar/" + ID).subscribe((datos) => {
+    this.httpClient.delete("/api/usuarios/eliminar/" + ID, {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
     })
   }

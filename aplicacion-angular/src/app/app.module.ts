@@ -17,6 +17,7 @@ import { RegistroCuentaComponent } from './components/registro-cuenta/registro-c
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { HomeComponent } from './components/home/home.component';
+import { AutenticacionTelefonoComponent } from './components/autenticacion-telefono/autenticacion-telefono.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomeComponent } from './components/home/home.component';
     RegistroCuentaComponent,
     ContactoComponent,
     AyudaComponent,
-    HomeComponent
+    HomeComponent,
+    AutenticacionTelefonoComponent
   ],
   imports: [
     BrowserModule,
