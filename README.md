@@ -25,7 +25,7 @@ _**Ejecución del servidor Node.**_
 >```
 
 _**Ejecución de la aplicación Angular.**_
->_**1.** Abrir una terminal en el directorio del proyecto Angular._
+>_**1.** Abrir una terminal en el directorio principal y desplazarse al proyecto Angular._
 >```
 >$ cd aplicacion-angular
 >```
