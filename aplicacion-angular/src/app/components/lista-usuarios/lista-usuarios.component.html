@@ -1,4 +1,4 @@
-<div class="table-responsive"> 
+<div class="table-responsive" *ngIf="mostrarLista else mostrarCarga"> 
   <table class="table table-striped table-light border border-2 mb-1">
     <thead>
       <tr>
@@ -23,3 +23,10 @@
     </tbody>
   </table>
 </div>
+
+<ng-template #mostrarCarga>
+  <div class="d-flex align-items-center">
+    <strong class="text-danger">Cargando lista...</strong>
+    <div class="spinner-border ms-auto text-danger" role="status" aria-hidden="true"></div>
+  </div>
+</ng-template>

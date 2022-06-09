@@ -8,6 +8,7 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 })
 export class ListaUsuariosComponent implements OnInit {
   listaUsuarios!: any[];
+  mostrarLista: boolean = false;
 
   constructor(public autenticacion: AutenticacionService) { 
   }
@@ -16,6 +17,7 @@ export class ListaUsuariosComponent implements OnInit {
     this.autenticacion.obtenerUsuarios().subscribe((datos: any) => {
       console.log(datos);
       this.listaUsuarios = datos;
+      this.mostrarLista = true;
     })
   }
 

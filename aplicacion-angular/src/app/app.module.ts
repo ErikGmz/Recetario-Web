@@ -30,6 +30,7 @@ import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuari
 import { CamposVaciosPipe } from './pipes/campos-vacios.pipe';
 import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
 import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
+import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
     ListaUsuariosComponent,
     CamposVaciosPipe,
     ListaRecetasComponent,
-    NumeroPersonasPipe
+    NumeroPersonasPipe,
+    AgregarRecetaComponent
   ],
   imports: [
     BrowserModule,

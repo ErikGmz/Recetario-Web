@@ -8,6 +8,7 @@ import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
+import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: "ayuda", component: AyudaComponent, canActivate: [NoAdministradorGuard] },
   { path: "contacto", component: ContactoComponent, canActivate: [NoAdministradorGuard] },
   { path: "lista-usuarios", component: ListaUsuariosComponent, canActivate: [AdministradorGuard] },
-  { path: "lista-recetas", component: ListaRecetasComponent, canActivate: [AdministradorGuard] }
+  { path: "lista-recetas", component: ListaRecetasComponent, canActivate: [AdministradorGuard] },
+  { path: "agregar-receta", component: AgregarRecetaComponent, canActivate: [AdministradorGuard] }
 ];
 
 @NgModule({

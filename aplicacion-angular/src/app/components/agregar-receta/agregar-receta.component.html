@@ -1,0 +1,115 @@
+<div class="border border-2 mx-0 mx-lg-4">
+	<h3 class="text-center py-4 bg-light border-bottom mb-0">Registro de receta</h3>
+	<form novalidate [formGroup]="datosRegistro" class="px-4 px-md-5 pt-5">
+		<div class="row">
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="nombre-receta" class="form-label">Nombre de la receta<span class="text-danger"> *</span></label>
+				<input #nombreReceta type="text" [ngClass]="{'is-invalid':!datosRegistro.get('nombreReceta')?.valid && datosRegistro.controls['nombreReceta'].dirty, 'is-valid':datosRegistro.get('nombreReceta')?.valid}" 
+				class="form-control" id="nombre-receta" required autocomplete="OFF" formControlName="nombreReceta">
+				<div *ngIf="!datosRegistro.controls['nombreReceta']?.errors" class="valid-feedback">Nombre de la receta correcto.</div>
+				<div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['required']" class="invalid-feedback">Nombre de la receta obligatorio. </div>  
+				<div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['minlength']" class="invalid-feedback">El nombre de la receta debe tener mínimo 5 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['maxlength']" class="invalid-feedback">El nombre de la receta debe tener máximo 100 caracteres.</div>  
+			</div>
+
+			<div class="col-12 col-lg-6 mb-4">
+				<label for="tipo-receta" class="form-label">Tipo de la receta<span class="text-danger"> *</span></label>
+				<select #tipoReceta class="form-select" [ngClass]="{'is-invalid':!datosRegistro.get('tipoReceta')?.valid && datosRegistro.controls['tipoReceta'].dirty, 'is-valid':datosRegistro.get('tipoReceta')?.valid}"
+				id="tipo-receta" aria-label="Selección de tipo de receta" required formControlName="tipoReceta">
+					<option value="Casera" selected>Casera</option>
+					<option value="Mexicana">Mexicana</option>
+					<option value="Italiana">Italiana</option>
+					<option value="Francesa">Francesa</option>
+					<option value="Japonesa">Japonesa</option>
+					<option value="China">China</option>
+					<option value="Estadounidense">Estadounidense</option>
+					<option value="Alternativa">Alternativa</option>
+				</select>
+				<div *ngIf="!datosRegistro.controls['tipoReceta']?.errors" class="valid-feedback">Tipo de receta correcto.</div>
+				<div *ngIf="datosRegistro.controls['tipoReceta'].errors?.['required']" class="invalid-feedback">Tipo de receta obligatorio. </div>  
+			</div>
+
+			<div class="col-12 mb-4">
+				<label for="descripcion-receta" class="form-label">Descripción de la receta<span class="text-danger"> *</span></label>
+				<textarea #descripcionReceta type="text" [ngClass]="{'is-invalid':!datosRegistro.get('descripcionReceta')?.valid && datosRegistro.controls['descripcionReceta'].dirty, 'is-valid':datosRegistro.get('descripcionReceta')?.valid}" 
+				class="form-control mx-auto" id="descripcion-receta" required autocomplete="OFF" formControlName="descripcionReceta" rows="2"></textarea>
+				<div *ngIf="!datosRegistro.controls['descripcionReceta']?.errors" class="valid-feedback">Descripción de la receta correcta.</div>
+				<div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['required']" class="invalid-feedback">Descripción de la receta obligatoria.</div>  
+				<div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['minlength']" class="invalid-feedback">La descripción de la receta debe tener mínimo 10 caracteres.</div>  
+				<div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['maxlength']" class="invalid-feedback">La descripción de la receta debe tener máximo 300 caracteres.</div>  
+			</div>
+
+			<div class="col-12 mb-4">
+				<label for="imagen-receta" class="form-label">Imagen de la receta<span class="text-danger"> *</span></label>
+				<input #imagenReceta class="form-control" type="file" id="imagen-receta" formControlName="imagenReceta"
+				[ngClass]="{'is-invalid':!datosRegistro.get('imagenReceta')?.valid && datosRegistro.controls['imagenReceta'].dirty, 'is-valid':datosRegistro.get('imagenReceta')?.valid}"
+				accept="image/png, image/gif, image/jpeg, image/jpg">
+				<div *ngIf="!datosRegistro.controls['imagenReceta']?.errors" class="valid-feedback">Imagen de la receta correcta.</div>
+				<div *ngIf="datosRegistro.controls['imagenReceta'].errors?.['required']" class="invalid-feedback">Imagen de la receta obligatoria.</div>  
+				<div *ngIf="datosRegistro.controls['imagenReceta'].errors?.['archivoImagen']" class="invalid-feedback">Se requiere un archivo de imagen (png, jpg, gif o jpeg).</div>
+			</div>
+
+			<div class="col-12 mb-4" [formGroup]="$any(datosRegistro.get('datosIngredientes'))" #camposIngredientes>
+				<div>
+					<label for="ingrediente1-receta" class="form-label me-3">Ingrediente(s) de la receta<span class="text-danger"> *</span></label>
+					<div class="d-inline-block">
+						<button class="btn btn-primary py-0 px-1" (click)="agregarCampoIngrediente()">
+							<i class="bi bi-plus-lg"></i>
+						</button>
+						<button class="ms-2 btn btn-danger py-0 px-1" [disabled]="desactivarBotonEliminarCampoIngrediente()"
+						(click)="eliminarCampoIngrediente()">
+							<i class="bi bi-dash"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 col-md-6" *ngFor="let _ of [].constructor(cantidadCamposIngredientes); let i = index">
+						<div class="input-group mt-2">
+							<span class="input-group-text" id="{{'texto-ingrediente' + (i + 1) + '-receta'}}"><i class="bi bi-cup-fill"></i></span>
+							<input #ingrediente1Receta type="text" class="form-control" id="{{'texto-ingrediente' + (i + 1) + '-receta'}}" 
+							required autocomplete="OFF" formControlName="{{'ingrediente' + (i + 1) + 'Receta'}}"
+							[ngClass]="{'is-invalid':indicarInvalidezCampoIngrediente(i + 1), 'is-valid':indicarValidezCampoIngrediente(i + 1)}">  
+							<div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['required']" class="invalid-feedback mt-2">Ingrediente obligatorio.</div> 
+							<div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['minlength']" class="invalid-feedback mt-2">El ingrediente debe tener mínimo 4 caracteres.</div> 
+							<div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['maxlength']" class="invalid-feedback mt-2">El ingrediente debe tener máximo 50 caracteres.</div> 
+						</div>  
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12" [formGroup]="$any(datosRegistro.get('datosPasos'))" #camposPreparacion>
+				<div>
+					<label for="paso1-receta" class="form-label me-3">Paso(s) de preparación<span class="text-danger"> *</span></label>
+					<div class="d-inline-block">
+						<button class="btn btn-primary py-0 px-1" (click)="agregarCampoPaso()">
+							<i class="bi bi-plus-lg"></i>
+						</button>
+						<button class="ms-2 btn btn-danger py-0 px-1" [disabled]="desactivarBotonEliminarCampoPaso()"
+						(click)="eliminarCampoPaso()">
+							<i class="bi bi-dash"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 col-md-6" *ngFor="let _ of [].constructor(cantidadCamposPasos); let i = index">
+						<div class="input-group mt-2">
+							<span class="input-group-text" id="{{'texto-paso' + (i + 1) + '-receta'}}">{{i + 1}}</span>
+							<input #paso1Receta type="text" class="form-control" id="{{'texto-paso' + (i + 1) + '-receta'}}" 
+							required autocomplete="OFF" formControlName="{{'paso' + (i + 1) + 'Receta'}}"
+							[ngClass]="{'is-invalid':indicarInvalidezCampoPaso(i + 1), 'is-valid':indicarValidezCampoPaso(i + 1)}">  
+							<div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['required']" class="invalid-feedback mt-2">Paso obligatorio.</div> 
+							<div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['minlength']" class="invalid-feedback mt-2">El paso debe tener mínimo 10 caracteres.</div> 
+							<div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['maxlength']" class="invalid-feedback mt-2">El paso debe tener máximo 200 caracteres.</div> 
+						</div>  
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-success mb-5 mt-4" [disabled]="datosRegistro.invalid">
+			Registrar receta
+		</button>
+	</form>
+</div>
