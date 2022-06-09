@@ -13,9 +13,10 @@ router.post('/agregar', async (peticion, respuesta) => {
         const datosUsuarioNuevo = {
             ID: peticion.body.ID,
             correoElectronico: peticion.body.correoElectronico,
-            nombreCompleto: peticion.body.nombreCompleto,
+            nombreCompleto: peticion.body?.nombreCompleto,
             nombreUsuario: peticion.body.nombreUsuario,
-            permisos: peticion.body.permisos
+            permisos: peticion.body.permisos,
+            numeroTelefono: peticion.body?.numeroTelefono
         }
         await baseDatos.collection("usuarios").doc(datosUsuarioNuevo.ID).set(datosUsuarioNuevo);
         console.log("El usuario fue exitosamente agregado.");
@@ -64,7 +65,7 @@ router.delete('/eliminar/:id', async (peticion, respuesta) => {
         const resultado = await baseDatos.collection("usuarios").doc(peticion.params.id).delete();
         console.log("Usuario eliminado.");
         console.log(resultado);
-        respuesta.send("Usuario eliminado.\n" + resultado);
+        respuesta.send("Usuario eliminado.\n" + JSON.stringify(resultado));
     }
     catch(error) {
         console.log("Ocurrió un error al borrar el usuario.");
