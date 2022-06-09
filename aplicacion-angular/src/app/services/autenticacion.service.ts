@@ -68,13 +68,14 @@ export class AutenticacionService {
   }
 
   enviarMensajeTelefono(numeroTelefono: string) {
-    this.autenticacion.signInWithPhoneNumber(numeroTelefono, this.referenciaVentana.recaptchaVerifier)
+    return this.autenticacion.signInWithPhoneNumber(numeroTelefono, this.referenciaVentana.recaptchaVerifier)
     .then((resultado) => {
       alert("El código de verificación fue enviado al número " + numeroTelefono + ".");
       this.referenciaVentana.confirmationResult = resultado;
       this.referenciaVentana.recaptchaVerifier.clear();
+      return true;
     })
-    .catch(this.desplegarError);
+    .catch((error) => {this.desplegarError(error); return false;});
   }
 
   registrarUsuarioTelefono(nombreCompleto: string, nombreUsuario: string, codigoVerificacion: string) {
@@ -109,7 +110,7 @@ export class AutenticacionService {
         localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
         alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
         this.router.navigate(['/']);
-      }, 1000);
+      }, 3000);
     })
     .catch(this.desplegarError);
   }

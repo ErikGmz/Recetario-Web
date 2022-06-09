@@ -14,6 +14,7 @@ export class AutenticacionTelefonoComponent implements OnInit, OnDestroy {
   datosRegistro!: FormGroup;
   numeroVerificacion!: FormGroup;
   numeroTelefono = new NumeroTelefono();
+  captchaResuelto: boolean = false;
 
   constructor(private ventana: VentanaService, 
   public autenticacion: AutenticacionService) { }
@@ -39,11 +40,14 @@ export class AutenticacionTelefonoComponent implements OnInit, OnDestroy {
     });
 
     this.autenticacion.referenciaVentana = this.ventana.referenciaVentana;
-    this.autenticacion.referenciaVentana.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    this.autenticacion.referenciaVentana.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container',
+    {'callback': (respuesta: any) => {this.captchaResuelto = true}, 
+    'expired-callback': (error: any) => {this.captchaResuelto = false}});
     this.autenticacion.referenciaVentana.recaptchaVerifier.render();
   }
 
   ngOnDestroy(): void {
+    this.captchaResuelto = false;
     this.autenticacion.referenciaVentana.confirmationResult = null;
   }
 
@@ -53,7 +57,11 @@ export class AutenticacionTelefonoComponent implements OnInit, OnDestroy {
     this.numeroTelefono.zona = zonaNumero;
     this.numeroTelefono.prefijo = prefijoNumero;
     this.numeroTelefono.linea = lineaNumero;
-    this.autenticacion.enviarMensajeTelefono(this.numeroTelefono.formatoE164);
+    this.autenticacion.enviarMensajeTelefono(this.numeroTelefono.formatoE164)
+    .then((valor) => {
+      this.captchaResuelto = false;
+    })
+    .catch((error) => {}); 
   }
 
   realizarInicioSesion(nombreCompleto: string, nombreUsuario: string,
