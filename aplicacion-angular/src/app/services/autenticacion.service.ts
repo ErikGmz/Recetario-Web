@@ -176,7 +176,7 @@ export class AutenticacionService {
     return this.httpClient.get("/api/recetas/obtener-todos");
   }
 
-  obtenerImagenesRecetas(listaRecetas: any) {
+  obtenerImagenesRecetas(listaRecetas: any): boolean {
     this.imagenesRecetas = [];
 
     listaRecetas.forEach((receta: any) => {+
@@ -184,6 +184,7 @@ export class AutenticacionService {
         this.imagenesRecetas.push(URL);
       });
     })
+    return true;
   }
 
   iniciarSesion(correo: string, clave: string) {

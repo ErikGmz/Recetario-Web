@@ -8,6 +8,7 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 })
 export class ListaRecetasComponent implements OnInit {
   listaRecetas!: any[];
+  mostrarLista: boolean = false;
 
   constructor(public autenticacion: AutenticacionService) { }
 
@@ -15,7 +16,7 @@ export class ListaRecetasComponent implements OnInit {
     this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
       console.log(datos);
       this.listaRecetas = datos;
-      this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
+      this.mostrarLista = this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
     });
   }
 
