@@ -33,10 +33,10 @@
           attr.aria-labelledby="{{'datos-tab' + indice + 1}}">
             <div class="card py-4 px-2 px-md-4">
               <div class="row g-0">
-                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center">
                   <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-8 d-flex align-items-center">
                   <div class="card-body pe-md-0">
                     <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
                     <h6 class="card-subtitle mb-3 text-muted">Receta de tipo {{receta.tipoReceta | camposVacios}}</h6>
@@ -51,10 +51,10 @@
           attr.aria-labelledby="{{'ingredientes-tab' + indice + 1}}">
             <div class="card py-4 px-2 px-md-4">
               <div class="row g-0">
-                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center">
                   <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-8 d-flex align-items-center">
                   <div class="card-body pe-md-0">
                     <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
                     <h6 class="card-subtitle mb-3 text-muted">Ingredientes</h6>
@@ -80,10 +80,10 @@
           attr.aria-labelledby="{{'#preparacion' + indice + 1}}">
             <div class="card py-4 px-2 px-md-4">
               <div class="row g-0">
-                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center">
                   <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-8 d-flex align-items-center">
                   <div class="card-body pe-md-0">
                     <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
                     <h6 class="card-subtitle mb-3 text-muted">Preparación</h6>
@@ -109,14 +109,14 @@
           attr.aria-labelledby="{{'#codigo' + indice + 1}}">
             <div class="card py-4 px-2 px-md-4">
               <div class="row g-0">
-                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center">
                   <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-8 d-flex align-items-center">
                   <div class="card-body pe-md-0">
                     <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
                     <h6 class="card-subtitle mb-3 text-muted">Código QR</h6>
-
+                    <ngx-qrcode [value]='definirDatosCodigoQR(indice)' [scale]="2.5"></ngx-qrcode>
                     <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
                   </div>
                 </div>

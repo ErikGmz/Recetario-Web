@@ -8,6 +8,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -54,7 +55,8 @@ import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxQRCodeModule
   ],
   providers: [
     InvitadoGuard,

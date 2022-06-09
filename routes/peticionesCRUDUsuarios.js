@@ -27,7 +27,6 @@ router.post('/agregar', async (peticion, respuesta) => {
         respuesta.send("Ocurrió un error al agregar al usuario.");
     }
 });
-module.exports = router;
 
 router.get('/obtener-todos', async (peticion, respuesta) => {
     try {
@@ -49,10 +48,10 @@ router.get('/obtener-todos', async (peticion, respuesta) => {
 
 router.get('/obtener/:id', async (peticion, respuesta) => {
     try {
-        datosUsuarios = await baseDatos.collection("usuarios").doc(peticion.params.id).get();
+        datosUsuario = await baseDatos.collection("usuarios").doc(peticion.params.id).get();
         console.log("Datos del usuario correspondiente.");
-        console.log(datosUsuarios.data());
-        respuesta.send(datosUsuarios.data());
+        console.log(datosUsuario.data());
+        respuesta.send(datosUsuario.data());
     }
     catch(error) {
         console.log("Ocurrió un error al obtener el usuario.");

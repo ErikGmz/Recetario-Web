@@ -19,4 +19,7 @@ export class ListaRecetasComponent implements OnInit {
     });
   }
 
+  definirDatosCodigoQR(numeroReceta: number): string {
+    return JSON.stringify(this.listaRecetas[numeroReceta]);
+  }
 }
