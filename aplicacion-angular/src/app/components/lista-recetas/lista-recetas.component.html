@@ -1,0 +1,130 @@
+<div class="border border-2 mx-0 mx-lg-5">
+  <h3 class="text-center py-4 bg-light border-bottom mb-0">Lista de productos</h3>
+  <div class="py-5 px-3 px-md-4 px-lg-5">
+    <ng-container *ngFor="let receta of listaRecetas; let indice = index">
+      <div class="card text-center mb-4">
+        <div class="card-header">
+          <ul class="nav nav-pills card-header-pills" id="{{'receta' + indice + 1}}" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="{{'datos-tab' + indice + 1}}" data-bs-toggle="tab" 
+              attr.data-bs-target="{{'#datos' + indice + 1}}" type="button" role="tab" 
+              attr.aria-controls="{{'datos' + indice + 1}}" aria-selected="true">Datos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="{{'ingredientes-tab' + indice + 1}}" data-bs-toggle="tab" 
+              attr.data-bs-target="{{'#ingredientes' + indice + 1}}" type="button" role="tab" 
+              attr.aria-controls="{{'ingredientes' + indice + 1}}" aria-selected="false">Ingredientes</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="{{'preparacion-tab' + indice + 1}}" data-bs-toggle="tab" 
+              attr.data-bs-target="{{'#preparacion' + indice + 1}}" type="button" role="tab" 
+              attr.aria-controls="{{'preparacion' + indice + 1}}" aria-selected="false">Preparación</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="{{'codigo-tab' + indice + 1}}" data-bs-toggle="tab" 
+              attr.data-bs-target="{{'#codigo' + indice + 1}}" type="button" role="tab" 
+              attr.aria-controls="{{'codigo' + indice + 1}}" aria-selected="false">Código QR</button>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="tab-content" id="{{'contenido-receta' + indice + 1}}">
+          <div class="tab-pane fade show active" id="{{'datos' + indice + 1}}" role="tabpanel" 
+          attr.aria-labelledby="{{'datos-tab' + indice + 1}}">
+            <div class="card py-4 px-2 px-md-4">
+              <div class="row g-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                  <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                </div>
+                <div class="col-12 col-md-8">
+                  <div class="card-body pe-md-0">
+                    <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
+                    <h6 class="card-subtitle mb-3 text-muted">Receta de tipo {{receta.tipoReceta | camposVacios}}</h6>
+                    <p class="card-text">{{receta.descripcion | camposVacios}}.</p>
+                    <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="{{'ingredientes' + indice + 1}}" role="tabpanel" 
+          attr.aria-labelledby="{{'ingredientes-tab' + indice + 1}}">
+            <div class="card py-4 px-2 px-md-4">
+              <div class="row g-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                  <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                </div>
+                <div class="col-12 col-md-8">
+                  <div class="card-body pe-md-0">
+                    <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
+                    <h6 class="card-subtitle mb-3 text-muted">Ingredientes</h6>
+
+                    <div class="card mx-0 mx-md-5 mb-3" *ngIf="receta.ingredientes.length > 0 else sinIngredientes">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let ingrediente of receta.ingredientes"> 
+                          {{ingrediente}}
+                        </li>
+                      </ul>
+                    </div>
+                    <ng-template #sinIngredientes>
+                      <td>{{receta.ingredientes | camposVacios}}</td>
+                    </ng-template>
+
+                    <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="{{'preparacion' + indice + 1}}" role="tabpanel" 
+          attr.aria-labelledby="{{'#preparacion' + indice + 1}}">
+            <div class="card py-4 px-2 px-md-4">
+              <div class="row g-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                  <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                </div>
+                <div class="col-12 col-md-8">
+                  <div class="card-body pe-md-0">
+                    <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
+                    <h6 class="card-subtitle mb-3 text-muted">Preparación</h6>
+
+                    <div class="card mx-0 mx-md-5 mb-3" *ngIf="receta.pasos.length > 0 else sinPasos">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let paso of receta.pasos"> 
+                          {{paso}}.
+                        </li>
+                      </ul>
+                    </div>
+                    <ng-template #sinPasos>
+                      <p class="card-text">{{receta.pasos | camposVacios}}</p>
+                    </ng-template>
+
+                    <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="{{'codigo' + indice + 1}}" role="tabpanel" 
+          attr.aria-labelledby="{{'#codigo' + indice + 1}}">
+            <div class="card py-4 px-2 px-md-4">
+              <div class="row g-0">
+                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                  <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                </div>
+                <div class="col-12 col-md-8">
+                  <div class="card-body pe-md-0">
+                    <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
+                    <h6 class="card-subtitle mb-3 text-muted">Código QR</h6>
+
+                    <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

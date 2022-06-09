@@ -27,6 +27,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AutenticacionTelefonoComponent } from './components/autenticacion-telefono/autenticacion-telefono.component';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 import { CamposVaciosPipe } from './pipes/campos-vacios.pipe';
+import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
+import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { CamposVaciosPipe } from './pipes/campos-vacios.pipe';
     HomeComponent,
     AutenticacionTelefonoComponent,
     ListaUsuariosComponent,
-    CamposVaciosPipe
+    CamposVaciosPipe,
+    ListaRecetasComponent,
+    NumeroPersonasPipe
   ],
   imports: [
     BrowserModule,

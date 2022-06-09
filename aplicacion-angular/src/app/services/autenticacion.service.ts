@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -9,12 +10,14 @@ import { Router } from '@angular/router';
 })
 export class AutenticacionService {
   referenciaVentana: any;
+  imagenesRecetas!: any[];
   datosUsuarioActual: any = JSON.parse(localStorage.getItem('datosUsuario')!);
   informacionAdicional = JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
 
   constructor(public autenticacion: AngularFireAuth, 
   public router: Router, public baseDatos: AngularFirestore, 
-  public ngZone: NgZone, private httpClient: HttpClient) { 
+  public ngZone: NgZone, private httpClient: HttpClient,
+  public storage: AngularFireStorage) { 
     if(this.datosUsuarioActual === null) {
       this.datosUsuarioActual = {}
     }
@@ -163,6 +166,24 @@ export class AutenticacionService {
 
   obtenerUsuarios(): any {
     return this.httpClient.get("/api/usuarios/obtener-todos");
+  }
+
+  obtenerReceta(ID: string): any {
+    return this.httpClient.get("/api/recetas/obtener/" + ID);
+  }
+
+  obtenerRecetas(): any {
+    return this.httpClient.get("/api/recetas/obtener-todos");
+  }
+
+  obtenerImagenesRecetas(listaRecetas: any) {
+    this.imagenesRecetas = [];
+
+    listaRecetas.forEach((receta: any) => {+
+      this.storage.ref("recetas/" + receta.nombreImagen).getDownloadURL().subscribe((URL) => {
+        this.imagenesRecetas.push(URL);
+      });
+    })
   }
 
   iniciarSesion(correo: string, clave: string) {
