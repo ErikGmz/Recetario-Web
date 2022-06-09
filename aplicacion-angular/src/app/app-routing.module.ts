@@ -7,14 +7,21 @@ import { RegistroCuentaComponent } from './components/registro-cuenta/registro-c
 import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 
+import { InvitadoGuard } from './guards/invitado.guard';
+import { UsuariosGuard } from './guards/usuarios.guard';
+import { AdministradorGuard } from './guards/administrador.guard';
+import { NoInvitadoGuard } from './guards/no-invitado.guard';
+import { NoUsuariosGuard } from './guards/no-usuarios.guard';
+import { NoAdministradorGuard } from './guards/no-administrador.guard';
+
 const routes: Routes = [
   { path: '*', redirectTo: '', pathMatch: 'full' },
   { path: '', component: HomeComponent },
-  { path: "inicio-sesion", component: InicioSesionComponent },
-  { path: "autenticacion-telefono", component: AutenticacionTelefonoComponent },
-  { path: "registro-cuenta", component: RegistroCuentaComponent },
-  { path: "ayuda", component: AyudaComponent },
-  { path: "contacto", component: ContactoComponent }
+  { path: "inicio-sesion", component: InicioSesionComponent, canActivate: [InvitadoGuard] },
+  { path: "autenticacion-telefono", component: AutenticacionTelefonoComponent, canActivate: [InvitadoGuard] },
+  { path: "registro-cuenta", component: RegistroCuentaComponent, canActivate: [InvitadoGuard] },
+  { path: "ayuda", component: AyudaComponent, canActivate: [NoAdministradorGuard] },
+  { path: "contacto", component: ContactoComponent, canActivate: [NoAdministradorGuard] }
 ];
 
 @NgModule({

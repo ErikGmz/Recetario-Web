@@ -9,15 +9,22 @@ import { Router } from '@angular/router';
 })
 export class AutenticacionService {
   referenciaVentana: any;
-  datosUsuarioActual: any;
-  informacionAdicional = {
-    nombreCompleto: "Invitado",
-    permisos: ""
-  };
+  datosUsuarioActual: any = JSON.parse(localStorage.getItem('datosUsuario')!);
+  informacionAdicional = JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
 
   constructor(public autenticacion: AngularFireAuth, 
   public router: Router, public baseDatos: AngularFirestore, 
   public ngZone: NgZone, private httpClient: HttpClient) { 
+    if(this.datosUsuarioActual === null) {
+      this.datosUsuarioActual = {}
+    }
+    if(this.informacionAdicional === null) {
+      this.informacionAdicional = {
+        nombreCompleto: "",
+        permisos: "Invitado"
+      }
+    }
+
     //Actualizar la información del usuario en el
     //localStorage cuando ocurra un inicio o cierre
     //de sesión.
@@ -25,24 +32,18 @@ export class AutenticacionService {
       if(usuario) {
         this.datosUsuarioActual = usuario;
         localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
-        JSON.parse(localStorage.getItem('datosUsuario')!);
 
         this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
           if(datos !== null) {
             this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
             this.informacionAdicional.permisos = datos.permisos;
             localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
-            JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
           }
         });
       } 
       else {
-        this.informacionAdicional.nombreCompleto = "Invitado";
-        this.informacionAdicional.permisos = "";
         localStorage.setItem('datosUsuario', 'null');
-        JSON.parse(localStorage.getItem('datosUsuario')!);
         localStorage.setItem('informacionExtraUsuario', 'null');
-        JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
       }
     });
   }
@@ -139,6 +140,7 @@ export class AutenticacionService {
           //Borrar el usuario y todos sus datos registrados.
           usuario?.delete();
           this.eliminarUsuarioBaseDatos(this.datosUsuarioActual.uid);
+
           alert("El usuario fue exitosamente eliminado.");
           this.cerrarSesion();
         })
@@ -171,6 +173,7 @@ export class AutenticacionService {
         this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
         this.informacionAdicional.permisos = datos.permisos;
       });
+
       alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
       this.router.navigate(['/']);
     })
@@ -181,6 +184,7 @@ export class AutenticacionService {
     this.autenticacion.signOut().then(() => {
       //Reiniciar la información del usuario actual.
       localStorage.removeItem('datosUsuario');
+      localStorage.removeItem('informacionExtraUsuario');
       this.datosUsuarioActual = null;
       this.informacionAdicional = {
         nombreCompleto: "Invitado",

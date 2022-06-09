@@ -9,6 +9,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 
+import { InvitadoGuard } from './guards/invitado.guard';
+import { UsuariosGuard } from './guards/usuarios.guard';
+import { AdministradorGuard } from './guards/administrador.guard';
+import { NoInvitadoGuard } from './guards/no-invitado.guard';
+import { NoUsuariosGuard } from './guards/no-usuarios.guard';
+import { NoAdministradorGuard } from './guards/no-administrador.guard';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -41,7 +48,14 @@ import { AutenticacionTelefonoComponent } from './components/autenticacion-telef
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    InvitadoGuard,
+    UsuariosGuard,
+    AdministradorGuard,
+    NoInvitadoGuard,
+    NoUsuariosGuard,
+    NoAdministradorGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
