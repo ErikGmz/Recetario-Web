@@ -31,7 +31,7 @@ _**Ejecución de la aplicación Angular.**_
 >$ cd aplicacion-angular
 >```
 >
->_**2.** Iniciar la ejecución del proyecto mediante los siguientes comandos:._
+>_**2.** Iniciar la ejecución del proyecto mediante los siguientes comandos:_
 >```
 >$ npm install
 >$ ng serve -o
