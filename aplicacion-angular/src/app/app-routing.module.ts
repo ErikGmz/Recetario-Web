@@ -6,6 +6,7 @@ import { AutenticacionTelefonoComponent } from './components/autenticacion-telef
 import { RegistroCuentaComponent } from './components/registro-cuenta/registro-cuenta.component';
 import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
+import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: "autenticacion-telefono", component: AutenticacionTelefonoComponent, canActivate: [InvitadoGuard] },
   { path: "registro-cuenta", component: RegistroCuentaComponent, canActivate: [InvitadoGuard] },
   { path: "ayuda", component: AyudaComponent, canActivate: [NoAdministradorGuard] },
-  { path: "contacto", component: ContactoComponent, canActivate: [NoAdministradorGuard] }
+  { path: "contacto", component: ContactoComponent, canActivate: [NoAdministradorGuard] },
+  { path: "lista-usuarios", component: ListaUsuariosComponent, canActivate: [AdministradorGuard] }
 ];
 
 @NgModule({

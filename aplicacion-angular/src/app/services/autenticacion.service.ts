@@ -21,7 +21,7 @@ export class AutenticacionService {
     if(this.informacionAdicional === null) {
       this.informacionAdicional = {
         nombreCompleto: "",
-        permisos: "Invitado"
+        permisos: ""
       }
     }
 
@@ -34,6 +34,7 @@ export class AutenticacionService {
         localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
 
         this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
+          console.log(datos);
           if(datos !== null) {
             this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
             this.informacionAdicional.permisos = datos.permisos;
@@ -84,6 +85,7 @@ export class AutenticacionService {
     .then((credencialUsuario: any) => {
       //Almacenar el usuario nuevo si no se encontraba en la base de datos.
       this.obtenerUsuario(credencialUsuario.user?.uid).subscribe((datos: any) => {
+        console.log(datos);
         if(datos === null) {
           //Completar los datos del perfil del usuario nuevo.
           credencialUsuario.user?.updateProfile({displayName: nombreUsuario})
@@ -160,7 +162,7 @@ export class AutenticacionService {
   }
 
   obtenerUsuarios(): any {
-    this.httpClient.get("/api/usuarios/obtener-todos");
+    return this.httpClient.get("/api/usuarios/obtener-todos");
   }
 
   iniciarSesion(correo: string, clave: string) {
@@ -170,6 +172,7 @@ export class AutenticacionService {
       this.datosUsuarioActual = credencialUsuario.user;
 
       this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
+        console.log(datos);
         this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
         this.informacionAdicional.permisos = datos.permisos;
       });

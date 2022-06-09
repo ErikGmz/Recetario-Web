@@ -29,7 +29,7 @@
           </ul>
         </li>
 
-        <li class="nav-item dropdown" *ngIf="autenticacion.informacionAdicional.permisos !== 'Administrador'">
+        <li class="nav-item dropdown" *ngIf="autenticacion.informacionAdicional.permisos !== 'Administrador' else usuarioAdministrador">
           <a class="nav-link dropdown-toggle" id="informacion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Información
           </a>
@@ -38,6 +38,18 @@
             <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/contacto']">Contacto</a></li>
           </ul>
         </li>
+
+        <ng-template #usuarioAdministrador>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="operaciones-crud" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Operaciones-CRUD
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="operaciones-crud">
+              <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/lista-usuarios']">Usuarios registrados</a></li>
+              <li><hr class="dropdown-divider"></li>
+            </ul>
+          </li>
+        </ng-template>
       </ul>
 
       <div *ngIf="autenticacion.informacionAdicional.permisos !== ''"

@@ -25,6 +25,8 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { HomeComponent } from './components/home/home.component';
 import { AutenticacionTelefonoComponent } from './components/autenticacion-telefono/autenticacion-telefono.component';
+import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
+import { CamposVaciosPipe } from './pipes/campos-vacios.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { AutenticacionTelefonoComponent } from './components/autenticacion-telef
     ContactoComponent,
     AyudaComponent,
     HomeComponent,
-    AutenticacionTelefonoComponent
+    AutenticacionTelefonoComponent,
+    ListaUsuariosComponent,
+    CamposVaciosPipe
   ],
   imports: [
     BrowserModule,
