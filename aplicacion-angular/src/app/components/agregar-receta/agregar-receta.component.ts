@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
@@ -10,15 +10,17 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 export class AgregarRecetaComponent implements OnInit {
   @ViewChild("camposIngredientes") camposIngredientes!: ElementRef;
   @ViewChild("camposPreparacion") camposPreparacion!: ElementRef;
+  imagenReceta!: any;
   datosRegistro!: FormGroup;
   cantidadCamposIngredientes: number = 1;
   cantidadCamposPasos: number = 1;
 
-  constructor(public autenticacionService: AutenticacionService) { 
+  constructor(public autenticacion: AutenticacionService,
+  private formBuilder: FormBuilder) { 
   }
 
   ngOnInit(): void {
-    this.datosRegistro = new FormGroup({
+    this.datosRegistro = this.formBuilder.group({
       nombreReceta: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       tipoReceta: new FormControl("", Validators.required),
       descripcionReceta: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(300)]),
@@ -30,6 +32,20 @@ export class AgregarRecetaComponent implements OnInit {
         paso1Receta: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(200)])
       })
     });
+  }
+
+  convertirObjetoEnArreglo(objeto: any) {
+    let arreglo = [];
+    for(let llave in objeto) {
+      if(objeto.hasOwnProperty(llave)) {
+        arreglo.push(objeto[llave]);
+      }
+    }
+    return arreglo;
+  }
+
+  cargarImagenReceta(evento: any) {
+    this.imagenReceta = evento.target.files[0];
   }
 
   verificarArchivoImagen(campoImagen: FormControl) {
@@ -49,6 +65,10 @@ export class AgregarRecetaComponent implements OnInit {
 
   desactivarBotonEliminarCampoIngrediente() {
     return(this.cantidadCamposIngredientes < 2);
+  }
+
+  desactivarBotonAgregarCampoIngrediente() {
+    return(this.cantidadCamposIngredientes > 19);
   }
 
   indicarInvalidezCampoIngrediente(numeroCampo: number) {
@@ -76,6 +96,10 @@ export class AgregarRecetaComponent implements OnInit {
     return(this.cantidadCamposPasos < 2);
   }
 
+  desactivarBotonAgregarCampoPaso() {
+    return(this.cantidadCamposPasos > 19);
+  }
+
   indicarInvalidezCampoPaso(numeroCampo: number) {
     return !this.datosRegistro.get('datosPasos')?.get(`paso${numeroCampo}Receta`)?.valid 
 		&& this.datosRegistro.get('datosPasos')?.get(`paso${numeroCampo}Receta`)?.dirty
@@ -95,5 +119,36 @@ export class AgregarRecetaComponent implements OnInit {
   eliminarCampoPaso() {
     let pasos = this.datosRegistro.get("datosPasos") as FormGroup;
     pasos.removeControl(`paso${this.cantidadCamposPasos--}Receta`);
+  }
+
+  registrarReceta() {
+    const campos = this.datosRegistro.controls;
+    const imagen = campos["imagenReceta"].value;
+    const nombreImagen = imagen.substring(imagen.lastIndexOf('\\') + 1, imagen.length);
+
+    const datosReceta = {
+      nombreReceta: campos["nombreReceta"].value.trim(),
+      tipoReceta: campos["tipoReceta"].value.trim(),
+      descripcion: campos["descripcionReceta"].value.trim(),
+      nombreImagen: nombreImagen,
+      ingredientes: this.convertirObjetoEnArreglo(campos['datosIngredientes'].value),
+      pasos: this.convertirObjetoEnArreglo(campos['datosPasos'].value),
+      cantidadFavoritos: 0
+    }
+
+    this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
+      if(datos.find((receta: any) => {return receta.nombreReceta === campos["nombreReceta"].value}) !== undefined) {
+        alert("La receta ya está registrada en el sistema.");
+        return;
+      }
+      else if(datos.find((receta: any) => {return receta.nombreImagen === nombreImagen}) !== undefined) {
+        alert("El archivo de imagen ya está alojado en el sistema.");
+        return;
+      }
+      if(this.autenticacion.registrarReceta(datosReceta, this.imagenReceta)) {
+        alert("La receta fue exitosamente registrada.");
+        this.datosRegistro.reset();
+      }
+    })
   }
 }

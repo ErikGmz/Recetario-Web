@@ -41,8 +41,8 @@ router.get('/obtener-todos', async (peticion, respuesta) => {
         respuesta.send(arregloUsuarios);
     }
     catch(error) {
-        console.log("Ocurrió un error al obtener los usuarios.");
-        respuesta.send("Ocurrió un error al obtener los usuarios.");
+        console.log("Ocurrió un error al obtener los usuarios.\n" + error);
+        respuesta.send("Ocurrió un error al obtener los usuarios.\n" + error);
     }
 });
 
@@ -54,8 +54,8 @@ router.get('/obtener/:id', async (peticion, respuesta) => {
         respuesta.send(datosUsuario.data());
     }
     catch(error) {
-        console.log("Ocurrió un error al obtener el usuario.");
-        respuesta.send("Ocurrió un error al obtener el usuario.");
+        console.log("Ocurrió un error al obtener el usuario.\n" + error);
+        respuesta.send("Ocurrió un error al obtener el usuario.\n" + error);
     }
 });
 
@@ -67,8 +67,8 @@ router.delete('/eliminar/:id', async (peticion, respuesta) => {
         respuesta.send("Usuario eliminado.\n" + JSON.stringify(resultado));
     }
     catch(error) {
-        console.log("Ocurrió un error al borrar el usuario.");
-        respuesta.send("Ocurrió un error al borrar el usuario.");
+        console.log("Ocurrió un error al borrar el usuario.\n" + error);
+        respuesta.send("Ocurrió un error al borrar el usuario.\n" + error);
     }
 });
 module.exports = router;

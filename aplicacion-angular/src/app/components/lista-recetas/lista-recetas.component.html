@@ -1,6 +1,6 @@
 <div class="border border-2 mx-0 mx-lg-5">
   <h3 class="text-center py-4 bg-light border-bottom mb-0">Lista de productos</h3>
-  <div class="py-5 px-3 px-md-4 px-lg-5">
+  <div class="pt-5 pb-4 px-3 px-md-4 px-lg-5">
     <ng-container *ngIf="mostrarLista else mostrarCarga">
       <ng-container *ngFor="let receta of listaRecetas; let indice = index">
         <div class="card text-center mb-4">
@@ -35,11 +35,11 @@
               <div class="card py-4 px-2 px-md-4">
                 <div class="row g-0">
                   <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center justify-content-center">
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] !== undefined">
-                      <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) !== undefined">
+                      <img [src]="autenticacion.imagenesRecetas.get(receta.nombreImagen)" class="img-fluid rounded-start border border-3" alt="...">
                     </ng-container>
                     
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] === undefined">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) === undefined">
                       <div class="spinner-border" role="status">
                         <span class="visually-hidden">Cargando...</span>
                       </div>
@@ -48,7 +48,7 @@
                   <div class="col-12 col-md-8 d-flex align-items-center">
                     <div class="card-body pe-md-0">
                       <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
-                      <h6 class="card-subtitle mb-3 text-muted">Receta de tipo {{receta.tipoReceta | camposVacios}}</h6>
+                      <h6 class="card-subtitle mb-3 text-muted">Receta de tipo {{receta.tipoReceta | titlecase | camposVacios}}</h6>
                       <p class="card-text">{{receta.descripcion | camposVacios}}.</p>
                       <p class="card-text mb-0"><small class="text-muted">ID: {{receta.ID | camposVacios}}.</small></p>
                       <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
@@ -62,11 +62,11 @@
               <div class="card py-4 px-2 px-md-4">
                 <div class="row g-0">
                   <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center justify-content-center">
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] !== undefined">
-                      <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) !== undefined">
+                      <img [src]="autenticacion.imagenesRecetas.get(receta.nombreImagen)" class="img-fluid rounded-start border border-3" alt="...">
                     </ng-container>
                     
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] === undefined">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) === undefined">
                       <div class="spinner-border" role="status">
                         <span class="visually-hidden">Cargando...</span>
                       </div>
@@ -99,11 +99,11 @@
               <div class="card py-4 px-2 px-md-4">
                 <div class="row g-0">
                   <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center justify-content-center">
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] !== undefined">
-                      <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) !== undefined">
+                      <img [src]="autenticacion.imagenesRecetas.get(receta.nombreImagen)" class="img-fluid rounded-start border border-3" alt="...">
                     </ng-container>
                     
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] === undefined">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) === undefined">
                       <div class="spinner-border" role="status">
                         <span class="visually-hidden">Cargando...</span>
                       </div>
@@ -136,11 +136,11 @@
               <div class="card py-4 px-2 px-md-4">
                 <div class="row g-0">
                   <div class="col-12 col-md-4 mb-2 mb-md-0 d-flex align-items-center justify-content-center">
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] !== undefined">
-                      <img [src]="autenticacion.imagenesRecetas[indice]" class="img-fluid rounded-start border border-3" alt="...">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) !== undefined">
+                      <img [src]="autenticacion.imagenesRecetas.get(receta.nombreImagen)" class="img-fluid rounded-start border border-3" alt="...">
                     </ng-container>
                     
-                    <ng-container *ngIf="autenticacion.imagenesRecetas[indice] === undefined">
+                    <ng-container *ngIf="autenticacion.imagenesRecetas.get(receta.nombreImagen) === undefined">
                       <div class="spinner-border" role="status">
                         <span class="visually-hidden">Cargando...</span>
                       </div>
