@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
@@ -8,30 +8,58 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
   styleUrls: ['./agregar-receta.component.css']
 })
 export class AgregarRecetaComponent implements OnInit {
-  @ViewChild("camposIngredientes") camposIngredientes!: ElementRef;
-  @ViewChild("camposPreparacion") camposPreparacion!: ElementRef;
   imagenReceta!: any;
   datosRegistro!: FormGroup;
   cantidadCamposIngredientes: number = 1;
   cantidadCamposPasos: number = 1;
+  @Input() recetaAEditar!: any;
+  habilitarEdicion!: boolean;
 
   constructor(public autenticacion: AutenticacionService,
   private formBuilder: FormBuilder) { 
   }
 
   ngOnInit(): void {
+    this.habilitarEdicion = (this.recetaAEditar !== undefined);
+
     this.datosRegistro = this.formBuilder.group({
       nombreReceta: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       tipoReceta: new FormControl("", Validators.required),
       descripcionReceta: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(300)]),
       imagenReceta: new FormControl("", [Validators.required, this.verificarArchivoImagen]),
       datosIngredientes: new FormGroup({
-        ingrediente1Receta: new FormControl("", [Validators.required, Validators.minLength(4), Validators.maxLength(50)])
+        ingrediente1Receta: new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)])
       }),
       datosPasos: new FormGroup({
-        paso1Receta: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(200)])
+        paso1Receta: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)])
       })
     });
+
+    if(this.habilitarEdicion) {
+      for(let i = 1; i <= this.recetaAEditar.ingredientes.length; i++) {
+        if(i >= 2) this.agregarCampoIngrediente();
+        let nombrePropiedad = "ingrediente" + i + "Receta";
+
+        this.datosRegistro.controls["datosIngredientes"].patchValue({
+          [nombrePropiedad]: this.recetaAEditar.ingredientes[i - 1]
+        });
+      }
+      
+      for(let i = 1; i <= this.recetaAEditar.pasos.length; i++) {
+        if(i >= 2) this.agregarCampoPaso();
+        let nombrePropiedad = "paso" + i + "Receta";
+
+        this.datosRegistro.controls["datosPasos"].patchValue({
+          [nombrePropiedad]: this.recetaAEditar.pasos[i - 1]
+        });
+      }
+      this.datosRegistro.patchValue({
+        nombreReceta: this.recetaAEditar.nombreReceta,
+        tipoReceta: this.recetaAEditar.tipoReceta,
+        descripcionReceta: this.recetaAEditar.descripcion,
+        imagenReceta: this.imagenReceta
+      });
+    }
   }
 
   convertirObjetoEnArreglo(objeto: any) {
@@ -56,6 +84,7 @@ export class AgregarRecetaComponent implements OnInit {
         case "png":
         case "jpg":
         case "gif":
+        case "webp":
         case "jpeg": return null;
         default: return {archivoImagen: true};
       }
@@ -84,7 +113,7 @@ export class AgregarRecetaComponent implements OnInit {
     this.cantidadCamposIngredientes++;
     let ingredientes = this.datosRegistro.get("datosIngredientes") as FormGroup;
     ingredientes.addControl(`ingrediente${this.cantidadCamposIngredientes}Receta`,
-    new FormControl("", [Validators.required, Validators.minLength(4), Validators.maxLength(50)]));
+    new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)]));
   }
   
   eliminarCampoIngrediente() {
@@ -113,7 +142,7 @@ export class AgregarRecetaComponent implements OnInit {
     this.cantidadCamposPasos++;
     let pasos = this.datosRegistro.get("datosPasos") as FormGroup;
     pasos.addControl(`paso${this.cantidadCamposPasos}Receta`,
-    new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(200)]));
+    new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)]));
   }
 
   eliminarCampoPaso() {
@@ -125,29 +154,60 @@ export class AgregarRecetaComponent implements OnInit {
     const campos = this.datosRegistro.controls;
     const imagen = campos["imagenReceta"].value;
     const nombreImagen = imagen.substring(imagen.lastIndexOf('\\') + 1, imagen.length);
+    const cantidadFavoritos = (this.recetaAEditar !== undefined 
+    ? this.recetaAEditar.cantidadFavoritos : 0);
 
-    const datosReceta = {
+    let datosReceta: any = {
       nombreReceta: campos["nombreReceta"].value.trim(),
       tipoReceta: campos["tipoReceta"].value.trim(),
       descripcion: campos["descripcionReceta"].value.trim(),
       nombreImagen: nombreImagen,
       ingredientes: this.convertirObjetoEnArreglo(campos['datosIngredientes'].value),
       pasos: this.convertirObjetoEnArreglo(campos['datosPasos'].value),
-      cantidadFavoritos: 0
+      cantidadFavoritos: cantidadFavoritos
     }
 
     this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
-      if(datos.find((receta: any) => {return receta.nombreReceta === campos["nombreReceta"].value}) !== undefined) {
-        alert("La receta ya está registrada en el sistema.");
-        return;
+      if(!this.habilitarEdicion) {
+        if(datos.find((receta: any) => {return receta.nombreReceta === campos["nombreReceta"].value}) !== undefined) {
+          alert("La receta ya está registrada en el sistema.");
+          return;
+        }
+        else if(datos.find((receta: any) => {return receta.nombreImagen === nombreImagen}) !== undefined) {
+          alert("El archivo de imagen ya está alojado en el sistema.");
+          return;
+        }
+        if(this.autenticacion.registrarReceta(datosReceta, this.imagenReceta)) {
+          alert("La receta fue exitosamente registrada.");
+          this.datosRegistro.reset();
+        }
       }
-      else if(datos.find((receta: any) => {return receta.nombreImagen === nombreImagen}) !== undefined) {
-        alert("El archivo de imagen ya está alojado en el sistema.");
-        return;
-      }
-      if(this.autenticacion.registrarReceta(datosReceta, this.imagenReceta)) {
-        alert("La receta fue exitosamente registrada.");
-        this.datosRegistro.reset();
+      else {
+        if(datos.find((receta: any) => {
+          return !(receta.nombreReceta !== campos["nombreReceta"].value
+          || (receta.nombreReceta === this.recetaAEditar.nombreReceta
+          && receta.nombreReceta === campos["nombreReceta"].value))
+        }) !== undefined) {
+          alert("La nueva receta ya está registrada en el sistema.");
+          return;
+        }
+
+        if(datos.find((receta: any) => {
+          return !(receta.nombreImagen !== nombreImagen
+          || (receta.nombreImagen === this.recetaAEditar.nombreImagen
+          && receta.nombreImagen === nombreImagen))
+        }) !== undefined) {
+          alert("El nuevo archivo de imagen ya está alojado en el sistema.");
+          return;
+        }
+
+        datosReceta['ID'] = this.recetaAEditar.ID;
+        if(this.autenticacion.actualizarReceta(this.recetaAEditar.nombreImagen, datosReceta, this.imagenReceta)) {
+          setTimeout(() => {
+            alert("La receta fue exitosamente actualizada.");
+            location.reload();
+          }, 5000);
+        }
       }
     })
   }

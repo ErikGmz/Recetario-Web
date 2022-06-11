@@ -9,6 +9,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
 import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
 import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
+import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: "contacto", component: ContactoComponent, canActivate: [NoAdministradorGuard] },
   { path: "lista-usuarios", component: ListaUsuariosComponent, canActivate: [AdministradorGuard] },
   { path: "lista-recetas", component: ListaRecetasComponent, canActivate: [AdministradorGuard] },
-  { path: "agregar-receta", component: AgregarRecetaComponent, canActivate: [AdministradorGuard] }
+  { path: "agregar-receta", component: AgregarRecetaComponent, canActivate: [AdministradorGuard] },
+  { path: "editar-receta", component: EditarRecetaComponent, canActivate: [AdministradorGuard] }
 ];
 
 @NgModule({

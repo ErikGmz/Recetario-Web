@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class AutenticacionService {
   referenciaVentana: any;
   imagenesRecetas!: Map<String, any>;
+  imagenReceta!: any;
   datosUsuarioActual: any = JSON.parse(localStorage.getItem('datosUsuario')!);
   informacionAdicional = JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
 
@@ -116,7 +117,7 @@ export class AutenticacionService {
         localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
         alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
         this.router.navigate(['/']);
-      }, 3000);
+      }, 5000);
     })
     .catch(this.desplegarError);
   }
@@ -184,7 +185,7 @@ export class AutenticacionService {
     return this.httpClient.get("/api/recetas/obtener-todos");
   }
 
-  obtenerImagenesRecetas(listaRecetas: any) {
+  obtenerImagenesRecetas(listaRecetas: any): boolean {
     this.imagenesRecetas = new Map<String, any>();
 
     listaRecetas.forEach((receta: any) => {
@@ -192,6 +193,23 @@ export class AutenticacionService {
         this.imagenesRecetas.set(receta.nombreImagen, URL);
       });
     })
+    return true;
+  }
+
+  obtenerImagenReceta(nombreImagen: string): boolean {
+    console.log(nombreImagen);
+    this.storage.ref("recetas/" + nombreImagen).getDownloadURL().subscribe((URL) => {
+      this.imagenReceta = URL;
+    });
+    return true;
+  }
+
+  actualizarReceta(rutaImagenPrevia: string, datosReceta: any, imagenReceta: any): boolean {
+    this.httpClient.put("/api/recetas/actualizar/" + datosReceta.ID, datosReceta, {responseType: "text"}).subscribe((datos) => {
+      console.log(datos);
+      this.storage.ref("recetas/" + rutaImagenPrevia).delete();
+      this.storage.upload("recetas/" + datosReceta.nombreImagen, imagenReceta);
+    });
     return true;
   }
 

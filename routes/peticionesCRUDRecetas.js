@@ -51,6 +51,18 @@ router.get('/obtener/:id', async (peticion, respuesta) => {
     }
 });
 
+router.put('/actualizar/:id', async (peticion, respuesta) => {
+    try {
+        await baseDatos.collection("recetas").doc(peticion.params.id).set(peticion.body);
+        console.log("La receta fue exitosamente actualizada.");
+        respuesta.send("La receta fue exitosamente actualizada.");
+    }
+    catch(error) {
+        console.log("La receta fue exitosamente actualizada.\n" + error);
+        respuesta.send("La receta fue exitosamente actualizada.\n" + error);
+    }
+});
+
 router.delete('/eliminar/:id', async (peticion, respuesta) => {
     try {
         const resultado = await baseDatos.collection("recetas").doc(peticion.params.id).delete();

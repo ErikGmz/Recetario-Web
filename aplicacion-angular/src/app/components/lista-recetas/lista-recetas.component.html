@@ -49,7 +49,7 @@
                     <div class="card-body pe-md-0">
                       <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
                       <h6 class="card-subtitle mb-3 text-muted">Receta de tipo {{receta.tipoReceta | titlecase | camposVacios}}</h6>
-                      <p class="card-text">{{receta.descripcion | camposVacios}}.</p>
+                      <p class="card-text">{{receta.descripcion | camposVacios}}</p>
                       <p class="card-text mb-0"><small class="text-muted">ID: {{receta.ID | camposVacios}}.</small></p>
                       <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
                     </div>
@@ -117,7 +117,7 @@
                       <div class="card mx-0 mx-md-5 mb-3" *ngIf="receta.pasos.length > 0 else sinPasos">
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item" *ngFor="let paso of receta.pasos"> 
-                            {{paso}}.
+                            {{paso}}
                           </li>
                         </ul>
                       </div>
@@ -163,7 +163,7 @@
     </ng-container>
 
     <ng-template #mostrarCarga> 
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center mb-4">
         <strong class="text-success">Cargando lista...</strong>
         <div class="spinner-border ms-auto text-success" role="status" aria-hidden="true"></div>
       </div>

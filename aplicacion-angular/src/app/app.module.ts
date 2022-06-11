@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { FormsModule } from '@angular/forms';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -31,6 +32,7 @@ import { CamposVaciosPipe } from './pipes/campos-vacios.pipe';
 import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
 import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
 import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
+import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { AgregarRecetaComponent } from './components/agregar-receta/agregar-rece
     CamposVaciosPipe,
     ListaRecetasComponent,
     NumeroPersonasPipe,
-    AgregarRecetaComponent
+    AgregarRecetaComponent,
+    EditarRecetaComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { AgregarRecetaComponent } from './components/agregar-receta/agregar-rece
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    FormsModule
   ],
   providers: [
     InvitadoGuard,
