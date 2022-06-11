@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { FormsModule } from '@angular/forms';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -34,6 +35,7 @@ import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
 import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
 import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
 import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
+import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafica-favoritos.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-r
     NumeroPersonasPipe,
     AgregarRecetaComponent,
     EditarRecetaComponent,
-    EliminarRecetaComponent
+    EliminarRecetaComponent,
+    GraficaFavoritosComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,8 @@ import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-r
     ReactiveFormsModule,
     HttpClientModule,
     NgxQRCodeModule,
-    FormsModule
+    FormsModule,
+    NgApexchartsModule
   ],
   providers: [
     InvitadoGuard,

@@ -154,6 +154,7 @@ export class AgregarRecetaComponent implements OnInit {
     const campos = this.datosRegistro.controls;
     const imagen = campos["imagenReceta"].value;
     const nombreImagen = imagen.substring(imagen.lastIndexOf('\\') + 1, imagen.length);
+    console.log(this.recetaAEditar);
     const cantidadFavoritos = (this.recetaAEditar !== undefined 
     ? this.recetaAEditar.cantidadFavoritos : 0);
 
