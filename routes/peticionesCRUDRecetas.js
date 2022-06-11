@@ -63,6 +63,34 @@ router.put('/actualizar/:id', async (peticion, respuesta) => {
     }
 });
 
+router.put('/incrementarFavorito/:id', async (peticion, respuesta) => {
+    try {
+        await baseDatos.collection("recetas").doc(peticion.params.id).update({
+            cantidadFavoritos: administrador.firestore.FieldValue.increment(1)
+        });
+        console.log("La cantidad de favoritos de la receta fue exitosamente incrementada.");
+        respuesta.send("La cantidad de favoritos de la receta fue exitosamente incrementada.");
+    }
+    catch(error) {
+        console.log("Ocurrió un error al incrementar la cantidad de favoritos.\n" + error);
+        respuesta.send("Ocurrió un error al incrementar la cantidad de favoritos.\n" + error);
+    }
+});
+
+router.put('/restarFavorito/:id', async (peticion, respuesta) => {
+    try {
+        await baseDatos.collection("recetas").doc(peticion.params.id).update({
+            cantidadFavoritos: administrador.firestore.FieldValue.increment(-1)
+        });
+        console.log("La cantidad de favoritos de la receta fue exitosamente restada.");
+        respuesta.send("La cantidad de favoritos de la receta fue exitosamente restada.");
+    }
+    catch(error) {
+        console.log("Ocurrió un error al restar la cantidad de favoritos.\n" + error);
+        respuesta.send("Ocurrió un error al restar la cantidad de favoritos.\n" + error);
+    }
+});
+
 router.delete('/eliminar/:id', async (peticion, respuesta) => {
     try {
         await baseDatos.collection("recetas").doc(peticion.params.id).delete();

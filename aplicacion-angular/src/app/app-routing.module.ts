@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: "ayuda", component: AyudaComponent, canActivate: [NoAdministradorGuard] },
   { path: "contacto", component: ContactoComponent, canActivate: [NoAdministradorGuard] },
   { path: "lista-usuarios", component: ListaUsuariosComponent, canActivate: [AdministradorGuard] },
-  { path: "lista-recetas", component: ListaRecetasComponent, canActivate: [AdministradorGuard] },
+  { path: "lista-recetas", component: ListaRecetasComponent, canActivate: [NoInvitadoGuard] },
   { path: "agregar-receta", component: AgregarRecetaComponent, canActivate: [AdministradorGuard] },
   { path: "editar-receta", component: EditarRecetaComponent, canActivate: [AdministradorGuard] },
   { path: "eliminar-receta", component: EliminarRecetaComponent, canActivate: [AdministradorGuard] },

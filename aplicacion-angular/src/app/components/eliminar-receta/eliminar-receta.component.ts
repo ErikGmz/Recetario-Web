@@ -31,7 +31,7 @@ export class EliminarRecetaComponent implements OnInit {
           setTimeout(() => {
             alert("La receta fue exitosamente eliminada.");
             this.datosReceta.reset();
-          }, 3000);
+          }, 5000);
         }
       }
     });

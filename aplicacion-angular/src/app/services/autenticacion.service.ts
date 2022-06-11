@@ -25,7 +25,8 @@ export class AutenticacionService {
     if(this.informacionAdicional === null) {
       this.informacionAdicional = {
         nombreCompleto: "",
-        permisos: ""
+        permisos: "",
+        recetasFavoritas: []
       }
     }
 
@@ -42,6 +43,7 @@ export class AutenticacionService {
           if(datos !== null) {
             this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
             this.informacionAdicional.permisos = datos.permisos;
+            this.informacionAdicional.recetasFavoritas = datos.recetasFavoritas;
             localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
           }
         });
@@ -97,6 +99,7 @@ export class AutenticacionService {
             this.agregarUsuarioABaseDatos(nombreCompleto);
             this.informacionAdicional.nombreCompleto = nombreCompleto;
             this.informacionAdicional.permisos = "Usuario";
+            this.informacionAdicional.recetasFavoritas = [];
 
             //Almacenar y cargar toda la información del usuario nuevo.
             this.datosUsuarioActual = credencialUsuario.user;
@@ -106,18 +109,17 @@ export class AutenticacionService {
         else {
           this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
           this.informacionAdicional.permisos = datos.permisos;
+          this.informacionAdicional.recetasFavoritas = [];
 
           //Almacenar y cargar toda la información del usuario nuevo.
           this.datosUsuarioActual = credencialUsuario.user;
         }
-      });
 
-      setTimeout(() => {
         localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
         localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
         alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
         this.router.navigate(['/']);
-      }, 5000);
+      });
     })
     .catch(this.desplegarError);
   }
@@ -130,7 +132,8 @@ export class AutenticacionService {
       nombreCompleto: nombreCompleto,
       nombreUsuario: this.datosUsuarioActual.displayName,
       permisos: "Usuario",
-      numeroTelefono: this.datosUsuarioActual?.phoneNumber
+      numeroTelefono: this.datosUsuarioActual?.phoneNumber,
+      recetasFavoritas: []
     }
 
     this.httpClient.post("/api/usuarios/agregar", datosUsuarioNuevo, {responseType: "text"}).subscribe((datos) => {
@@ -143,22 +146,29 @@ export class AutenticacionService {
       if(confirm("¿Realmente desea borrar su cuenta? (Operación permanente).")) {
         this.autenticacion.currentUser
         .then((usuario) => {
+          this.informacionAdicional.recetasFavoritas.forEach((IDReceta: any) => {
+            this.restarFavorito(IDReceta).subscribe((datos: any) => {
+              console.log(datos);
+            })
+          })
+
           //Borrar el usuario y todos sus datos registrados.
           usuario?.delete();
-          this.eliminarUsuarioBaseDatos(this.datosUsuarioActual.uid);
-
-          alert("El usuario fue exitosamente eliminado.");
-          this.cerrarSesion();
+          if(this.eliminarUsuarioBaseDatos(this.datosUsuarioActual.uid)) {
+            alert("El usuario fue exitosamente eliminado.");
+            this.cerrarSesion();
+          }
         })
         .catch(this.desplegarError);
       }
     }
   }
 
-  eliminarUsuarioBaseDatos(ID: string) {
+  eliminarUsuarioBaseDatos(ID: string): boolean {
     this.httpClient.delete("/api/usuarios/eliminar/" + ID, {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
     })
+    return true;
   }
 
   obtenerUsuario(ID: string): any {
@@ -215,10 +225,33 @@ export class AutenticacionService {
 
   eliminarReceta(IDReceta: string, rutaImagenReceta: string): boolean {
     this.httpClient.delete("/api/recetas/eliminar/" + IDReceta, {responseType: "text"}).subscribe((datos) => {
-      console.log(datos);
       this.storage.ref("recetas/" + rutaImagenReceta).delete();
+      this.obtenerUsuarios().subscribe((usuarios: any) => {
+        usuarios.forEach((usuario: any) => {
+          this.removerFavorito(usuario.ID, IDReceta).subscribe((resultado: any) => {
+            console.log(resultado);
+          });
+        });
+      });
+      console.log(datos);
     });
     return true;
+  }
+
+  agregarFavorito(IDusuario: string, IDReceta: string) {
+    return this.httpClient.put("api/usuarios/agregarFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
+  }
+
+  removerFavorito(IDusuario: string, IDReceta: string) {
+    return this.httpClient.put("api/usuarios/removerFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
+  }
+
+  incrementarFavorito(IDReceta: string) {
+    return this.httpClient.put("api/recetas/incrementarFavorito/" + IDReceta, null, {responseType: "text"});
+  }
+
+  restarFavorito(IDReceta: string) {
+    return this.httpClient.put("api/recetas/restarFavorito/" + IDReceta, null, {responseType: "text"});
   }
 
   iniciarSesion(correo: string, clave: string) {
@@ -231,10 +264,11 @@ export class AutenticacionService {
         console.log(datos);
         this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
         this.informacionAdicional.permisos = datos.permisos;
-      });
+        this.informacionAdicional.recetasFavoritas = datos.recetasFavoritas;
 
-      alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
-      this.router.navigate(['/']);
+        alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
+        this.router.navigate(['/']);
+      });
     })
     .catch(this.desplegarError);
   }
@@ -247,7 +281,8 @@ export class AutenticacionService {
       this.datosUsuarioActual = null;
       this.informacionAdicional = {
         nombreCompleto: "Invitado",
-        permisos: ""
+        permisos: "",
+        recetasFavoritas: []
       };
       this.router.navigate(['/inicio-sesion']);
     })

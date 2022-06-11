@@ -3,7 +3,7 @@
   <div class="pt-5 pb-4 px-3 px-md-4 px-lg-5">
     <ng-container *ngIf="mostrarLista else mostrarCarga">
       <ng-container *ngFor="let receta of listaRecetas; let indice = index">
-        <div class="card text-center mb-4">
+        <div class="card text-center mb-5">
           <div class="card-header">
             <ul class="nav nav-pills card-header-pills" id="{{'receta' + indice + 1}}" role="tablist">
               <li class="nav-item" role="presentation">
@@ -51,7 +51,9 @@
                       <h6 class="card-subtitle mb-3 text-muted">Receta de tipo {{receta.tipoReceta | titlecase | camposVacios}}</h6>
                       <p class="card-text">{{receta.descripcion | camposVacios}}</p>
                       <p class="card-text mb-0"><small class="text-muted">ID: {{receta.ID | camposVacios}}.</small></p>
-                      <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                      <p class="card-text" *ngIf="autenticacion.informacionAdicional.permisos !== 'Usuario'">
+                        <small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -88,7 +90,9 @@
                         <td>{{receta.ingredientes | camposVacios}}</td>
                       </ng-template>
 
-                      <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                      <p class="card-text" *ngIf="autenticacion.informacionAdicional.permisos !== 'Usuario'">
+                        <small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -125,7 +129,9 @@
                         <p class="card-text">{{receta.pasos | camposVacios}}</p>
                       </ng-template>
 
-                      <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                      <p class="card-text" *ngIf="autenticacion.informacionAdicional.permisos !== 'Usuario'">
+                        <small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -151,12 +157,25 @@
                       <h5 class="card-title">{{receta.nombreReceta | camposVacios}}</h5>
                       <h6 class="card-subtitle mb-3 text-muted">Código QR</h6>
                       <ngx-qrcode [value]='definirDatosCodigoQR(indice)' [scale]="1.7"></ngx-qrcode>
-                      <p class="card-text"><small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small></p>
+                      <p class="card-text" *ngIf="autenticacion.informacionAdicional.permisos !== 'Usuario'">
+                        <small class="text-muted">Receta favorita de {{receta.cantidadFavoritos | numeroPersonas}}.</small>
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div *ngIf="autenticacion.informacionAdicional.permisos === 'Usuario'" class="card-footer py-3 px-3 px-md-4 text-start">
+            <button *ngIf="this.favoritosRecetas.get(receta.ID)" class="btn btn-success"
+            (click)="agregarAFavoritos(receta.ID)">
+              Agregar a favoritos
+            </button>
+            <button *ngIf="!this.favoritosRecetas.get(receta.ID)" class="btn btn-danger"
+            (click)="removerDeFavoritos(receta.ID)">
+              Remover de favoritos
+            </button>
           </div>
         </div>
       </ng-container>

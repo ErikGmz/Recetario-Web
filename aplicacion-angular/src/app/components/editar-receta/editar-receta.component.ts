@@ -23,9 +23,9 @@ export class EditarRecetaComponent implements OnInit {
     this.busquedaFinalizada = false;
     this.busquedaFallida = false;
 
-    this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
+    this.autenticacion.obtenerReceta(this.busquedaReceta).subscribe((datos: any) => {
       this.busquedaFinalizada = true;
-      this.datosEdicionReceta = datos.find((receta: any) => {return receta.nombreReceta === this.busquedaReceta});
+      this.datosEdicionReceta = datos;
       if(this.datosEdicionReceta === undefined) {
         this.busquedaFallida = true;
       }

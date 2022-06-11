@@ -39,6 +39,17 @@
           </ul>
         </li>
 
+        <ng-container *ngIf="autenticacion.informacionAdicional.permisos === 'Usuario'">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="informacion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Consultas
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="informacion">
+              <li><a class="dropdown-item" [routerLinkActive]="['active']" [routerLink]="['/lista-recetas']">Consultar recetas</a></li>
+            </ul>
+          </li>
+        </ng-container>
+
         <ng-template #usuarioAdministrador>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="operaciones-crud" role="button" data-bs-toggle="dropdown" aria-expanded="false">
