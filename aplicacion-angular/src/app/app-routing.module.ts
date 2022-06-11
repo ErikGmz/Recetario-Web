@@ -10,6 +10,7 @@ import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuari
 import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
 import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
 import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
+import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: "lista-usuarios", component: ListaUsuariosComponent, canActivate: [AdministradorGuard] },
   { path: "lista-recetas", component: ListaRecetasComponent, canActivate: [AdministradorGuard] },
   { path: "agregar-receta", component: AgregarRecetaComponent, canActivate: [AdministradorGuard] },
-  { path: "editar-receta", component: EditarRecetaComponent, canActivate: [AdministradorGuard] }
+  { path: "editar-receta", component: EditarRecetaComponent, canActivate: [AdministradorGuard] },
+  { path: "eliminar-receta", component: EliminarRecetaComponent, canActivate: [AdministradorGuard] }
 ];
 
 @NgModule({

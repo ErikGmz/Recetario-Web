@@ -213,6 +213,14 @@ export class AutenticacionService {
     return true;
   }
 
+  eliminarReceta(IDReceta: string, rutaImagenReceta: string): boolean {
+    this.httpClient.delete("/api/recetas/eliminar/" + IDReceta, {responseType: "text"}).subscribe((datos) => {
+      console.log(datos);
+      this.storage.ref("recetas/" + rutaImagenReceta).delete();
+    });
+    return true;
+  }
+
   iniciarSesion(correo: string, clave: string) {
     this.autenticacion.signInWithEmailAndPassword(correo, clave)
     .then((credencialUsuario) => {

@@ -58,17 +58,16 @@ router.put('/actualizar/:id', async (peticion, respuesta) => {
         respuesta.send("La receta fue exitosamente actualizada.");
     }
     catch(error) {
-        console.log("La receta fue exitosamente actualizada.\n" + error);
-        respuesta.send("La receta fue exitosamente actualizada.\n" + error);
+        console.log("Ocurrió un error al actualizar la receta.\n" + error);
+        respuesta.send("Ocurrió un error al actualizar la receta.\n" + error);
     }
 });
 
 router.delete('/eliminar/:id', async (peticion, respuesta) => {
     try {
-        const resultado = await baseDatos.collection("recetas").doc(peticion.params.id).delete();
-        console.log("Receta eliminada.");
-        console.log(resultado);
-        respuesta.send("Receta eliminada.\n" + JSON.stringify(resultado));
+        await baseDatos.collection("recetas").doc(peticion.params.id).delete();
+        console.log("La receta fue exitosamente eliminada.");
+        respuesta.send("La receta fue exitosamente eliminada.");
     }
     catch(error) {
         console.log("Ocurrió un error al borrar la receta.\n" + error);

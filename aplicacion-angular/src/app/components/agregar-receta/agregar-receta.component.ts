@@ -178,8 +178,10 @@ export class AgregarRecetaComponent implements OnInit {
           return;
         }
         if(this.autenticacion.registrarReceta(datosReceta, this.imagenReceta)) {
-          alert("La receta fue exitosamente registrada.");
-          this.datosRegistro.reset();
+          setTimeout(() => {
+            alert("La receta fue exitosamente registrada.");
+            this.datosRegistro.reset();
+          }, 3000);
         }
       }
       else {

@@ -33,6 +33,7 @@ import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.
 import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
 import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
 import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
+import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { EditarRecetaComponent } from './components/editar-receta/editar-receta.
     ListaRecetasComponent,
     NumeroPersonasPipe,
     AgregarRecetaComponent,
-    EditarRecetaComponent
+    EditarRecetaComponent,
+    EliminarRecetaComponent
   ],
   imports: [
     BrowserModule,
