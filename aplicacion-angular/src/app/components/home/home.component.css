@@ -1,0 +1,15 @@
+  .html,body{
+    height: 92vh;
+}
+body {
+    background-image: url(/assets/imghome/fondohome.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #FFF;
+    margin-top: -48px;
+    margin-left: -125px;
+    margin-right: -125px;
+    margin-bottom: -100px;
+}
