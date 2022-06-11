@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
@@ -7,15 +7,19 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
   styleUrls: ['./lista-recetas.component.css']
 })
 export class ListaRecetasComponent implements OnInit {
+  @Input() recetasPrevias!: any;
   listaRecetas!: any[];
   favoritosRecetas: Map<String, boolean> = new Map<String, boolean>(); 
   mostrarLista: boolean = false;
+  operacionesFavoritos: boolean = false;
 
   constructor(public autenticacion: AutenticacionService) { }
 
   ngOnInit(): void {
-    this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
-      setTimeout(() => {
+    if(this.recetasPrevias === undefined) this.operacionesFavoritos = true;
+  
+    if(this.operacionesFavoritos) {
+      this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
         console.log(datos);
         this.listaRecetas = datos;
         
@@ -25,13 +29,28 @@ export class ListaRecetasComponent implements OnInit {
           });
         }
         this.mostrarLista = this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
-      }, 2000);
-    });
+      });
+    }
+    else {
+      this.listaRecetas = [];
+      let recetasFavoritas = JSON.parse(localStorage.getItem("informacionExtraUsuario")!).recetasFavoritas;
+      
+      this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
+        console.log(datos);
+
+        recetasFavoritas.forEach((IDReceta: any) => {
+          let busqueda = datos.find((receta: any) => {return IDReceta === receta.ID})
+          if(busqueda !== undefined) this.listaRecetas.push(busqueda);
+        });
+
+        this.mostrarLista = this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
+      });
+    }
   }
 
   verificarRecetaFavorita(IDReceta: string) {
     let bandera: boolean = true; 
-    if(this.autenticacion.informacionAdicional.recetasFavoritas.find((identificadorReceta: any) => {
+    if(JSON.parse(localStorage.getItem("informacionExtraUsuario")!).recetasFavoritas.find((identificadorReceta: any) => {
       return identificadorReceta === IDReceta
     }) !== undefined) bandera = false;
     this.favoritosRecetas.set(IDReceta, bandera);
@@ -43,6 +62,9 @@ export class ListaRecetasComponent implements OnInit {
         console.log(datos);
         console.log(datosAdicionales);
         this.favoritosRecetas.set(IDReceta, false);
+        let listaRecetas = JSON.parse(localStorage.getItem("informacionExtraUsuario")!);
+        listaRecetas.recetasFavoritas.push(IDReceta);
+        localStorage.setItem("informacionExtraUsuario", JSON.stringify(listaRecetas));
       })
     })
   }
@@ -53,6 +75,11 @@ export class ListaRecetasComponent implements OnInit {
         console.log(datos);
         console.log(datosAdicionales);
         this.favoritosRecetas.set(IDReceta, true);
+        let listaRecetas = JSON.parse(localStorage.getItem("informacionExtraUsuario")!);
+        listaRecetas.recetasFavoritas = listaRecetas.recetasFavoritas.filter((receta: any) => {
+          return receta !== IDReceta
+        });
+        localStorage.setItem("informacionExtraUsuario", JSON.stringify(listaRecetas));
       })
     })
   }

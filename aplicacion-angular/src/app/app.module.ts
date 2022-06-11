@@ -36,6 +36,7 @@ import { AgregarRecetaComponent } from './components/agregar-receta/agregar-rece
 import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
 import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
 import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafica-favoritos.component';
+import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favoritas/lista-recetas-favoritas.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafic
     AgregarRecetaComponent,
     EditarRecetaComponent,
     EliminarRecetaComponent,
-    GraficaFavoritosComponent
+    GraficaFavoritosComponent,
+    ListaRecetasFavoritasComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 <div class="border border-2 mx-0 mx-lg-5">
-  <h3 class="text-center py-4 bg-light border-bottom mb-0">Lista de productos</h3>
+  <h3 *ngIf="operacionesFavoritos" class="text-center py-4 bg-light border-bottom mb-0">Lista de recetas</h3>
+  <h3 *ngIf="!operacionesFavoritos" class="text-center py-4 bg-light border-bottom mb-0">Lista de recetas favoritas</h3>
   <div class="pt-5 pb-4 px-3 px-md-4 px-lg-5">
     <ng-container *ngIf="mostrarLista else mostrarCarga">
       <ng-container *ngFor="let receta of listaRecetas; let indice = index">
@@ -167,12 +168,12 @@
             </div>
           </div>
 
-          <div *ngIf="autenticacion.informacionAdicional.permisos === 'Usuario'" class="card-footer py-3 px-3 px-md-4 text-start">
-            <button *ngIf="this.favoritosRecetas.get(receta.ID)" class="btn btn-success"
+          <div *ngIf="autenticacion.informacionAdicional.permisos === 'Usuario' && operacionesFavoritos" class="card-footer py-3 px-3 px-md-4 text-start">
+            <button *ngIf="favoritosRecetas.get(receta.ID)" class="btn btn-success"
             (click)="agregarAFavoritos(receta.ID)">
               Agregar a favoritos
             </button>
-            <button *ngIf="!this.favoritosRecetas.get(receta.ID)" class="btn btn-danger"
+            <button *ngIf="!favoritosRecetas.get(receta.ID)" class="btn btn-danger"
             (click)="removerDeFavoritos(receta.ID)">
               Remover de favoritos
             </button>

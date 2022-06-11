@@ -12,6 +12,7 @@ import { AgregarRecetaComponent } from './components/agregar-receta/agregar-rece
 import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
 import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
 import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafica-favoritos.component';
+import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favoritas/lista-recetas-favoritas.component';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -33,7 +34,8 @@ const routes: Routes = [
   { path: "agregar-receta", component: AgregarRecetaComponent, canActivate: [AdministradorGuard] },
   { path: "editar-receta", component: EditarRecetaComponent, canActivate: [AdministradorGuard] },
   { path: "eliminar-receta", component: EliminarRecetaComponent, canActivate: [AdministradorGuard] },
-  { path: "grafica-favoritos", component: GraficaFavoritosComponent, canActivate: [AdministradorGuard] }
+  { path: "grafica-favoritos", component: GraficaFavoritosComponent, canActivate: [AdministradorGuard] },
+  { path: "lista-recetas-favoritas", component: ListaRecetasFavoritasComponent, canActivate: [UsuariosGuard] },
 ];
 
 @NgModule({
