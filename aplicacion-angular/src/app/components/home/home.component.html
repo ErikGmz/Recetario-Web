@@ -1,14 +1,65 @@
-<html>
-    <body>
-        <div class="jumbotron" style="position:absolute; top: 70px; left:20px; width: 650px;">
-            <h1 class="display-4"> ¡Hola Cocinero! </h1>
-            <p class="lead fs-2 fst-italic"> ¡Dale Sabor a tu Vida! </p>
-            <p class="lead fs-3">Esta empresa se creo con la finalidad de subir recetas de cocina para que todas las personas se sientan chefs profesionales.</p>
-            <hr class="fs-4">
-            <p> ¿Deseas ver nuestras recetas? ¡Regístrate aquí! </p>
-            <a class="btn btn-danger fst-italic fs-4" data-toggle="modal" data-target="#registro"> Registrarse </a>
-        </div>
-    <img src="assets/imghome/cocineros.png" height="500px" style="position:absolute; top: 190px; left: 750px;"> 
-    <img src="assets/imghome/logo.png" height="200px" style="position:absolute; top: 75px; left: 890px;"> 
-    </body>
-</html>
+<div class="px-2">
+	<div class="row">
+		<div class="col-12 col-md-3 col-lg-2 mb-3 mb-md-0" id="logo">
+			<img src="assets/imghome/logo.png" class="img-fluid"> 
+		</div>
+
+		<div class="col-12 col-md-9 col-lg-10">
+			<h1 class="display-5"> ¡Saludos, cocinero! </h1>
+			<p class="lead fs-3 fst-italic mb-0"> ¡Dale un poco de sabor a tu vida! </p>
+		</div>
+
+		<div class="col-12 my-2">
+			<hr class="fs-4">
+		</div>
+
+		<div class="col-12 col-lg-6 col-xl-8 d-flex justify-content-center align-items-center">
+			<div>
+				<p class="lead fs-5">
+					Esta empresa surgió con el propósito 
+					de compartir recetas de cocina, de tal forma que todas las personas puedan convertirse 
+					en chef's profesionales.
+				</p>
+	
+				<p class="lead fs-5">
+					Nuestro negocio surgió en 2020, año en el que la pandemia llegó al mundo. Amenazados por
+					una débil economía, pero equipados con excelsas habilidades gastronómicas, nos vimos en la
+					necesidad de abandonar nuestros estudios y trabajar en establecimientos de comida.
+				</p>
+	
+				<p class="lead fs-5 mb-3 mb-md-0">
+					Por fortuna, el mundo de la cocina nos permitió salir adelante. Gracias a todo esto entendimos
+					que toda persona debe contar con los conocimientos mínimos para preparar alimentos si desea
+					llegar lejos en su vida; dicha reflexión catapultó este proyecto de emprendimiento.
+				</p>
+			</div>
+		</div>
+
+		<div class="col-12 col-lg-6 col-xl-4 py-3 d-flex justify-content-center align-items-center" id="imagen">
+			<img src="assets/imghome/cocineros.png" class="img-fluid"> 
+		</div>
+
+		<div class="col-12 my-2">
+			<hr class="fs-4">
+		</div>
+
+		<div class="col-12">
+			<ng-container [ngSwitch]="autenticacion.informacionAdicional.permisos">
+				<ng-container *ngSwitchCase="'Administrador'"> 
+					<p class="mb-2">¡Bienvenido, querido administrador {{autenticacion.datosUsuarioActual.displayName}}!</p>
+					<p class="mb-0"> ¡Consulta, registra, actualiza y borra recetas, además de visualizar estadísticas! :) </p>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="'Usuario'"> 
+					<p class="mb-2">¡Bienvenido, querido usuario {{autenticacion.datosUsuarioActual.displayName}}!</p>
+					<p class="mb-0"> ¡Consulta recetas y selecciona tus favoritas! :) </p>
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					<p class="mb-2">¿Deseas ver nuestras recetas? ¡Regístrate ahora mismo y disfruta de nuestro recetario!</p>
+					<p class="mb-0"> ¡Puedes registrarte con tu correo electrónico o número de teléfono! :) </p>
+				</ng-container>
+			</ng-container>
+		</div>
+	</div>
+</div>
