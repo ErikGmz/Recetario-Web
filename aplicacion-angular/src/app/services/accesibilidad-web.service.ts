@@ -22,7 +22,7 @@ export class AccesibilidadWebService {
 
   cambiarModoLectura() {
     this.habilitarLectura = !this.habilitarLectura;
-    console.log(this.habilitarLectura);
+    speechSynthesis.cancel();
   }
 
   leerTexto(texto: string) {
