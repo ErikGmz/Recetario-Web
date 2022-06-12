@@ -1,0 +1,19 @@
+<div class="border border-2 mx-0 mx-lg-4">
+  <h3 class="text-center py-4 bg-light border-bottom mb-0">Eliminación de receta</h3>
+  <form novalidate [formGroup]="datosReceta" class="px-4 px-md-5 py-5">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <label for="id-receta" class="form-label">ID de la receta<span class="text-danger"> *</span></label>
+        <input type="text" [ngClass]="{'is-invalid':!datosReceta.get('idReceta')?.valid && datosReceta.controls['idReceta'].dirty, 'is-valid':datosReceta.get('idReceta')?.valid}" 
+        class="form-control" id="id-receta" required autocomplete="OFF" formControlName="idReceta">
+        <div *ngIf="!datosReceta.controls['idReceta']?.errors" class="valid-feedback">Nombre de la receta correcto.</div>
+        <div *ngIf="datosReceta.controls['idReceta'].errors?.['required']" class="invalid-feedback">Nombre de la receta obligatorio. </div>  
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="datosReceta.invalid"
+    (click)="eliminarReceta()">
+      Eliminar receta
+    </button>
+  </form>
+</div>

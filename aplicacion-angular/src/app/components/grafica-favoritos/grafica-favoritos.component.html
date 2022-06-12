@@ -1,0 +1,15 @@
+<div *ngIf="mostrarGrafico else mostrarCarga" class="border border-2 mx-0 mx-lg-4">
+  <h3 class="text-center py-4 bg-light border-bottom mb-0">Recetas favoritas</h3>
+  <div class="px-4 px-md-5 py-5" #contenedorGrafico>
+    <apx-chart [series]="opcionesGrafico.series" [chart]="opcionesGrafico.chart"
+    [xaxis]="opcionesGrafico.xaxis" [title]="opcionesGrafico.title"
+    [yaxis]="opcionesGrafico.yaxis" [plotOptions]="opcionesGrafico.plotOptions"></apx-chart>
+  </div>
+</div>
+  
+<ng-template #mostrarCarga>
+  <div class="d-flex align-items-center">
+    <strong class="text-primary">Cargando gráfica...</strong>
+    <div class="spinner-border ms-auto text-primary" role="status" aria-hidden="true"></div>
+  </div>
+</ng-template>
