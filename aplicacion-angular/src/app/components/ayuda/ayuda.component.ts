@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
+import { AccesibilidadWebService } from 'src/app/services/accesibilidad-web.service';
 
 @Component({
   selector: 'app-ayuda',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AyudaComponent implements OnInit {
 
-  constructor() { }
+  constructor(public autenticacion: AutenticacionService,
+  public accesibilidad: AccesibilidadWebService) { }
 
   ngOnInit(): void {
   }

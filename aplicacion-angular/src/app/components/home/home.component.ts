@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
+import { AccesibilidadWebService } from 'src/app/services/accesibilidad-web.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,8 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public autenticacion: AutenticacionService) { }
+  constructor(public autenticacion: AutenticacionService,
+  public accesibilidad: AccesibilidadWebService) { }
 
   ngOnInit(): void {
   }

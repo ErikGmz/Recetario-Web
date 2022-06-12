@@ -1,0 +1,8 @@
+<div class="d-inline-block" *ngIf="accesibilidad.habilitarLectura">
+  <button class="btn btn-primary py-0 px-2" (click)="accesibilidad.leerTexto(textoLectura)">
+    <i class="bi bi-play-fill"></i>
+  </button>
+  <button class="ms-2 btn btn-danger py-0 px-2" (click)="accesibilidad.pausarLectura()">
+    <i class="bi bi-pause-circle-fill"></i>
+  </button>
+</div>

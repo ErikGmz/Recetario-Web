@@ -1,0 +1,171 @@
+<div class="px-2 px-md-0">
+  <div>
+    <h1 class="display-5" #titulo1> ¡Preguntas frecuentes! </h1>
+    <p class="lead fs-3 fst-italic mb-0" #titulo2> Siempre estamos dispuestos a resolver tus dudas. ;-) </p>
+    <div *ngIf="accesibilidad.habilitarLectura" class="mt-2 mb-0">
+      <app-controles-accesibilidad [textoLectura]="titulo1.innerText + '. ' + titulo2.innerText"> 
+      </app-controles-accesibilidad>
+    </div>
+  </div>
+
+  <div class="mt-2 mb-5">
+    <hr class="fs-4">
+  </div>
+
+  <div>
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta1>¿Cómo funciona el sistema de registro por número telefónico?</li>
+      </ul>
+  
+      <p class="lead" #respuesta1>
+        Para iniciar sesión o registrarse mediante un número telefónico se debe consultar la pestaña 'Iniciar con teléfono'.
+        Después, se deben introducir nombre completo, de usuario, el número y resolver el captcha. Una vez hecho esto, se
+        enviará un código de verificación, a través del cual se habilitará el inicio de sesión.
+      </p>
+  
+      <p class="lead" #respuesta2>
+        Si el número telefónico ya estaba registrado en el sistema, entonces los datos originales del usuario permanecerán intactos,
+        lo que quiere decir que los campos de nombre completo y de usuario resultan, en este caso, impertinentes.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta1.innerHTML + ' ' + respuesta1.innerHTML + ' ' + respuesta2.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta2>¿Por qué el sistema no valida que los correos electrónicos registrados sean válidos?</li>
+      </ul>
+  
+      <p class="lead" #respuesta3>
+        Esto se debe a que el sistema de autenticación de usuarios utiliza el correo como un identificador, lo que significa
+        que no se empleará para mecanismos de correo electrónico.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta2.innerHTML + ' ' + respuesta3.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta3>¿No puedo modificar mis datos de usuario?</li>
+      </ul>
+  
+      <p class="lead" #respuesta4>
+        Por desgracia, esto no resulta posible por el momento. Debido al poco tiempo disponible para el desarrollo
+        del proyecto, la implementación de funciones adicionales demorará más de lo planeado.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta3.innerHTML + ' ' + respuesta4.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta4>¿Cómo puedo agregar o modificar alguna receta del sistema?</li>
+      </ul>
+  
+      <p class="lead" #respuesta5>
+        Solo el usuario administrador puede hacer esto, así que si se necesita realizar alguna operación con recetas,
+        entonces se debe contactar con él.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta4.innerHTML + ' ' + respuesta5.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta5>¿Por qué algunas operaciones llevan múltiples segundos en completarse?</li>
+      </ul>
+  
+      <p class="lead" #respuesta6>
+        Varias consultas que el sistema hace con la base de datos son de carácter asíncrono, debido a lo cual es probable
+        que, sin posponer la ejecución general de la página, ocurran eventos inconsistentes en el mismo.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta5.innerHTML + ' ' + respuesta6.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta6>¿Qué uso le puedo dar al código QR de una receta?</li>
+      </ul>
+  
+      <p class="lead" #respuesta7>
+        Cada uno de los códigos QR contiene toda la información de la receta que le corresponde, así que puede
+        emplearse para almacenar y compartir digitalmente las instrucciones de preparación de algún platillo de interés.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta6.innerHTML + ' ' + respuesta7.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta7>¿A dónde se envían los mensajes de la pestaña de contacto?</li>
+      </ul>
+  
+      <p class="lead" #respuesta8>
+        Al correo electrónico del administrador, aunque se utiliza como intermediario el correo electrónico
+        de la aplicación web, debido a lo cual no será posible recibir una respuesta directa.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta7.innerHTML + ' ' + respuesta8.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta8>¿Qué puedo hacer si encuentro alguna falla en el sistema?</li>
+      </ul>
+  
+      <p class="lead" #respuesta9>
+        Tratar de recopilar todas las circunstancias bajo las cuales el error ocurre y reportarlo a través de 
+        la pestaña de contacto o un mensaje directo vía correo electrónico.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta8.innerHTML + ' ' + respuesta9.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+
+    <div class="mb-5">
+      <ul class="lead fs-5 fw-bold">
+        <li #pregunta9>¿No puedo restablecer mi contraseña en caso de haberla olvidado?</li>
+      </ul>
+  
+      <p class="lead" #respuesta10>
+        Por el momento, no se puede hacer esto. Sin embargo, queremos enfatizar en que 
+        estamos trabajando continuamente para que el sistema reciba actualizaciones constantes, así
+        que ese problema se solucionará pronto.
+      </p>
+  
+      <app-controles-accesibilidad
+        [textoLectura]="pregunta9.innerHTML + ' ' + respuesta10.innerHTML"> 
+      </app-controles-accesibilidad>
+    </div>
+  </div>
+
+  <div class="col-12 mb-2">
+    <hr class="fs-4">
+  </div>
+
+  <div class="col-12">
+    <p #textoFinal>
+      Si tienes más preguntas, contáctanos mediante la pestaña 'Contacto' o el 
+      siguiente correo: recetarioweb@outlook.com. :)
+    </p>
+    <app-controles-accesibilidad [textoLectura]="textoFinal.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
+</div>
