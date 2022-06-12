@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -80,7 +81,8 @@ import { ControlesAccesibilidadComponent } from './components/controles-accesibi
     UsuariosGuard,
     AdministradorGuard,
     NoInvitadoGuard,
-    NoAdministradorGuard
+    NoAdministradorGuard,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
