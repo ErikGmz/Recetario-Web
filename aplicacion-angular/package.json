@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^14.0.1",
     "@angular/platform-browser-dynamic": "^14.0.1",
     "@angular/router": "^14.0.1",
+    "@angular/service-worker": "^14.0.1",
     "@techiediaries/ngx-qrcode": "^9.1.0",
     "apexcharts": "^3.35.3",
     "bootstrap": "^5.1.3",

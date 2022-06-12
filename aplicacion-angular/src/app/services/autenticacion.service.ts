@@ -115,10 +115,12 @@ export class AutenticacionService {
           this.datosUsuarioActual = credencialUsuario.user;
         }
 
-        localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
-        localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
-        alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
-        this.router.navigate(['/']);
+        setTimeout(() => {
+          localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
+          localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
+          alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
+          this.router.navigate(['/']);
+        }, 4000);
       });
     })
     .catch(this.desplegarError);
