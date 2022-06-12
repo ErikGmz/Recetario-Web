@@ -1,0 +1,26 @@
+@media (max-width: 410px) {
+  #logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  #logo > img {
+    max-height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  #logo > img {
+    max-height: 160px;
+  }
+}
+
+@media (max-width: 700px) {
+  #imagen > img {
+    max-height: 300px;
+  }
+}
+
+#imagen > img {
+  max-height: 400px;
+}
