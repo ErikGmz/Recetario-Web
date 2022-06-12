@@ -23,17 +23,20 @@ export class ContactoComponent implements OnInit {
 
   enviarCorreo(asunto: string, mensaje: string) {
     let nombreUsuario;
+    let nombreCompleto;
     if(this.autenticacion.datosUsuarioActual?.displayName === undefined) {
       nombreUsuario = "Invitado";
+      nombreCompleto = "Invitado";
     }
     else {
       nombreUsuario = this.autenticacion.datosUsuarioActual.displayName;
+      nombreCompleto = this.autenticacion.informacionAdicional.nombreCompleto;
     }
 
     let elementosCorreo = {
       asunto: asunto,
       mensaje: mensaje,
-      nombreCompleto: this.autenticacion.informacionAdicional.nombreCompleto,
+      nombreCompleto: nombreCompleto,
       nombreUsuario: nombreUsuario
     }
 
