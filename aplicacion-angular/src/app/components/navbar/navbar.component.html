@@ -80,12 +80,25 @@
         </ng-template>
       </ul>
 
-      <div *ngIf="autenticacion.informacionAdicional.permisos !== ''"
-      class="d-flex mt-1 mt-lg-0" id="nombre">
-        <h5 class="mb-0 py-1"><span class="badge rounded-pill bg-danger">
-          {{autenticacion.datosUsuarioActual?.displayName}} - {{autenticacion.informacionAdicional?.permisos}}
-        </span></h5>
+      <div *ngIf="autenticacion.informacionAdicional.permisos !== '' else mostrarSoloAccesibilidad"
+      class="d-flex my-1 mt-lg-0" id="nombre">
+        <button class="btn btn-danger py-0 px-2 me-3" (click)="accesibilidad.cambiarModoLectura()">
+          <i class="bi bi-ear-fill"></i>
+        </button>
+        <h5 class="mb-0 py-0">
+          <span class="badge rounded-pill bg-danger">
+            {{autenticacion.datosUsuarioActual?.displayName}} - {{autenticacion.informacionAdicional?.permisos}}
+          </span>
+        </h5>
       </div>
+
+      <ng-template #mostrarSoloAccesibilidad>
+        <div class="d-flex my-1 mt-lg-0">
+          <button class="btn btn-danger py-0 px-2 me-3" (click)="accesibilidad.cambiarModoLectura()">
+            <i class="bi bi-ear-fill"></i>
+          </button>
+        </div>
+      </ng-template>
     </div>
   </div>
 </nav>

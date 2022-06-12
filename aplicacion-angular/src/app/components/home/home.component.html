@@ -1,65 +1,85 @@
 <div class="px-2">
-	<div class="row">
-		<div class="col-12 col-md-3 col-lg-2 mb-3 mb-md-0" id="logo">
-			<img src="assets/imghome/logo.png" class="img-fluid"> 
-		</div>
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-2 mb-3 mb-md-0" id="logo">
+      <img src="assets/imghome/logo.png" class="img-fluid"> 
+    </div>
 
-		<div class="col-12 col-md-9 col-lg-10">
-			<h1 class="display-5"> ¡Saludos, cocinero! </h1>
-			<p class="lead fs-3 fst-italic mb-0"> ¡Dale un poco de sabor a tu vida! </p>
-		</div>
+    <div class="col-12 col-md-9 col-lg-10">
+      <h1 class="display-5" #titulo1> ¡Saludos, cocinero! </h1>
+      <p class="lead fs-3 fst-italic mb-0" #titulo2> ¡Estómago lleno, mente feliz! </p>
+      <div *ngIf="accesibilidad.habilitarLectura" class="mt-2 mb-0">
+        <app-controles-accesibilidad [textoLectura]="titulo1.innerText + ' ' + titulo2.innerText"> 
+        </app-controles-accesibilidad>
+      </div>
+    </div>
 
-		<div class="col-12 my-2">
-			<hr class="fs-4">
-		</div>
+    <div class="col-12 my-2">
+      <hr class="fs-4">
+    </div>
 
-		<div class="col-12 col-lg-6 col-xl-8 d-flex justify-content-center align-items-center">
-			<div>
-				<p class="lead fs-5">
-					Esta empresa surgió con el propósito 
-					de compartir recetas de cocina, de tal forma que todas las personas puedan convertirse 
-					en chef's profesionales.
-				</p>
-	
-				<p class="lead fs-5">
-					Nuestro negocio surgió en 2020, año en el que la pandemia llegó al mundo. Amenazados por
-					una débil economía, pero equipados con excelsas habilidades gastronómicas, nos vimos en la
-					necesidad de abandonar nuestros estudios y trabajar en establecimientos de comida.
-				</p>
-	
-				<p class="lead fs-5 mb-3 mb-md-0">
-					Por fortuna, el mundo de la cocina nos permitió salir adelante. Gracias a todo esto entendimos
-					que toda persona debe contar con los conocimientos mínimos para preparar alimentos si desea
-					llegar lejos en su vida; dicha reflexión catapultó este proyecto de emprendimiento.
-				</p>
-			</div>
-		</div>
+    <div class="col-12 col-lg-6 col-xl-8 d-flex justify-content-center align-items-center">
+      <div>
+        <p class="lead fs-5" #parrafo1>
+          Esta empresa surgió con el propósito 
+          de compartir recetas de cocina, de tal forma que todas las personas puedan convertirse 
+          en chef's profesionales.
+        </p>
+  
+        <p class="lead fs-5" #parrafo2>
+          Nuestro negocio surgió en 2020, año en el que la pandemia llegó al mundo. Amenazados por
+          una débil economía, pero equipados con excelsas habilidades gastronómicas, nos vimos en la
+          necesidad de abandonar nuestros estudios y trabajar en establecimientos de comida.
+        </p>
+  
+        <div class="mb-3 mb-md-0">
+          <p class="lead fs-5 mb-0" #parrafo3>
+            Por fortuna, el mundo de la cocina nos permitió salir adelante. Gracias a todo esto entendimos
+            que toda persona debe contar con los conocimientos mínimos para preparar alimentos si desea
+            llegar lejos en su vida; dicha reflexión catapultó este proyecto de emprendimiento.
+          </p>
+          <div *ngIf="accesibilidad.habilitarLectura" class="mt-2">
+            <app-controles-accesibilidad 
+            [textoLectura]="parrafo1.innerText + ' ' + parrafo2.innerText + ' ' + parrafo3.innerText"> 
+            </app-controles-accesibilidad>
+          </div>
+        </div>
+      </div>
+    </div>
 
-		<div class="col-12 col-lg-6 col-xl-4 py-3 d-flex justify-content-center align-items-center" id="imagen">
-			<img src="assets/imghome/cocineros.png" class="img-fluid"> 
-		</div>
+    <div class="col-12 col-lg-6 col-xl-4 py-3 d-flex justify-content-center align-items-center" id="imagen">
+      <img src="assets/imghome/cocineros.png" class="img-fluid"> 
+    </div>
 
-		<div class="col-12 my-2">
-			<hr class="fs-4">
-		</div>
+    <div class="col-12 my-2">
+      <hr class="fs-4">
+    </div>
 
-		<div class="col-12">
-			<ng-container [ngSwitch]="autenticacion.informacionAdicional.permisos">
-				<ng-container *ngSwitchCase="'Administrador'"> 
-					<p class="mb-2">¡Bienvenido, querido administrador {{autenticacion.datosUsuarioActual.displayName}}!</p>
-					<p class="mb-0"> ¡Consulta, registra, actualiza y borra recetas, además de visualizar estadísticas! :) </p>
-				</ng-container>
+    <div class="col-12">
+      <ng-container [ngSwitch]="autenticacion.informacionAdicional.permisos">
+        <ng-container *ngSwitchCase="'Administrador'"> 
+          <p class="mb-2" #administrador1>¡Bienvenido, querido administrador {{autenticacion.datosUsuarioActual.displayName}}!</p>
+          <p class="mb-2" #administrador2>¡Consulta, registra, actualiza y borra recetas, además de visualizar estadísticas! :)</p>
+          <app-controles-accesibilidad 
+          [textoLectura]="administrador1.innerText + ' ' + administrador2.innerText"> 
+          </app-controles-accesibilidad>
+        </ng-container>
 
-				<ng-container *ngSwitchCase="'Usuario'"> 
-					<p class="mb-2">¡Bienvenido, querido usuario {{autenticacion.datosUsuarioActual.displayName}}!</p>
-					<p class="mb-0"> ¡Consulta recetas y selecciona tus favoritas! :) </p>
-				</ng-container>
+        <ng-container *ngSwitchCase="'Usuario'"> 
+          <p class="mb-2" #usuario1>¡Bienvenido, querido usuario {{autenticacion.datosUsuarioActual.displayName}}!</p>
+          <p class="mb-2" #usuario2>¡Consulta recetas y selecciona tus favoritas! :)</p>
+          <app-controles-accesibilidad 
+          [textoLectura]="usuario1.innerText + ' ' + usuario2.innerText"> 
+          </app-controles-accesibilidad>
+        </ng-container>
 
-				<ng-container *ngSwitchDefault>
-					<p class="mb-2">¿Deseas ver nuestras recetas? ¡Regístrate ahora mismo y disfruta de nuestro recetario!</p>
-					<p class="mb-0"> ¡Puedes registrarte con tu correo electrónico o número de teléfono! :) </p>
-				</ng-container>
-			</ng-container>
-		</div>
-	</div>
+        <ng-container *ngSwitchDefault>
+          <p class="mb-2" #invitado1>¿Deseas ver nuestras recetas? ¡Regístrate ahora mismo y disfruta de nuestro recetario!</p>
+          <p class="mb-2" #invitado2>¡Puedes registrarte con tu correo electrónico o número de teléfono! :)</p>
+          <app-controles-accesibilidad 
+          [textoLectura]="invitado1.innerText + ' ' + invitado2.innerText"> 
+          </app-controles-accesibilidad>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </div>
