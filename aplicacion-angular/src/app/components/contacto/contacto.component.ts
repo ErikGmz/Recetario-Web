@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,12 +12,12 @@ export class ContactoComponent implements OnInit {
   datosCorreo!: any;
 
   constructor(public autenticacion: AutenticacionService, 
-  private httpClient: HttpClient, private formBuilder: FormBuilder) { }
+  private httpClient: HttpClient, private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.datosCorreo = this.formBuilder.group({
-      asunto: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(80)]),
-      mensaje: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(2000)])
+      asunto: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(80)]),
+      mensaje: new UntypedFormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(2000)])
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
@@ -8,14 +8,14 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
   styleUrls: ['./eliminar-receta.component.css']
 })
 export class EliminarRecetaComponent implements OnInit {
-  datosReceta!: FormGroup;
+  datosReceta!: UntypedFormGroup;
 
   constructor(public autenticacion: AutenticacionService,
-  private formBuilder: FormBuilder) { }
+  private formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.datosReceta = this.formBuilder.group({
-      idReceta: new FormControl("", Validators.required)
+      idReceta: new UntypedFormControl("", Validators.required)
     });
   }
 

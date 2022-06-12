@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
@@ -8,21 +8,21 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
   styleUrls: ['./registro-cuenta.component.css']
 })
 export class RegistroCuentaComponent implements OnInit {
-  datosRegistro!: FormGroup;
+  datosRegistro!: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder, 
+  constructor(private formBuilder: UntypedFormBuilder, 
   public autenticacionService: AutenticacionService) { 
   }
 
   ngOnInit(): void {
     this.datosRegistro = this.formBuilder.group({
-      nombreCompleto: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(80)]),
-      correoElectronico: new FormControl("", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-      nombreUsuario: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
-      clave: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
-      primeraConfirmacionClave: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
-      segundaConfirmacionClave: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
-      confirmarVerificacion: new FormControl("", Validators.required)
+      nombreCompleto: new UntypedFormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(80)]),
+      correoElectronico: new UntypedFormControl("", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      nombreUsuario: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
+      clave: new UntypedFormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+      primeraConfirmacionClave: new UntypedFormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+      segundaConfirmacionClave: new UntypedFormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+      confirmarVerificacion: new UntypedFormControl("", Validators.required)
     }, {
       validators: [
         this.verificarConfirmacion("clave", "primeraConfirmacionClave"),
@@ -32,7 +32,7 @@ export class RegistroCuentaComponent implements OnInit {
   }
 
   verificarConfirmacion(clave: string, confirmacionClave: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const controlClave = formGroup.controls[clave];
       const controlConfirmacion = formGroup.controls[confirmacionClave];
 
