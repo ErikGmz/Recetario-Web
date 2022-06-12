@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -37,8 +37,8 @@ export class ContactoComponent implements OnInit {
       nombreUsuario: nombreUsuario
     }
 
-    this.httpClient.post("api/correos/enviar", elementosCorreo).subscribe((datos: any) => {
-      console.log(datos.data());
+    this.httpClient.post("api/correos/enviar", elementosCorreo, {responseType: "text"}).subscribe((datos: any) => {
+      console.log(datos);
     });
     alert("El correo fue exitosamente enviado.");
     this.datosCorreo.reset();

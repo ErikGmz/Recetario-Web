@@ -8,6 +8,15 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { FormsModule } from '@angular/forms';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
+import { InvitadoGuard } from './guards/invitado.guard';
+import { UsuariosGuard } from './guards/usuarios.guard';
+import { AdministradorGuard } from './guards/administrador.guard';
+import { NoInvitadoGuard } from './guards/no-invitado.guard';
+import { NoAdministradorGuard } from './guards/no-administrador.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +26,17 @@ import { RegistroCuentaComponent } from './components/registro-cuenta/registro-c
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { AyudaComponent } from './components/ayuda/ayuda.component';
 import { HomeComponent } from './components/home/home.component';
+import { AutenticacionTelefonoComponent } from './components/autenticacion-telefono/autenticacion-telefono.component';
+import { ListaUsuariosComponent } from './components/lista-usuarios/lista-usuarios.component';
+import { CamposVaciosPipe } from './pipes/campos-vacios.pipe';
+import { ListaRecetasComponent } from './components/lista-recetas/lista-recetas.component';
+import { NumeroPersonasPipe } from './pipes/numero-personas.pipe';
+import { AgregarRecetaComponent } from './components/agregar-receta/agregar-receta.component';
+import { EditarRecetaComponent } from './components/editar-receta/editar-receta.component';
+import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
+import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafica-favoritos.component';
+import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favoritas/lista-recetas-favoritas.component';
+import { BuscarRecetaComponent } from './components/buscar-receta/buscar-receta.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +46,18 @@ import { HomeComponent } from './components/home/home.component';
     RegistroCuentaComponent,
     ContactoComponent,
     AyudaComponent,
-    HomeComponent
+    HomeComponent,
+    AutenticacionTelefonoComponent,
+    ListaUsuariosComponent,
+    CamposVaciosPipe,
+    ListaRecetasComponent,
+    NumeroPersonasPipe,
+    AgregarRecetaComponent,
+    EditarRecetaComponent,
+    EliminarRecetaComponent,
+    GraficaFavoritosComponent,
+    ListaRecetasFavoritasComponent,
+    BuscarRecetaComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +68,18 @@ import { HomeComponent } from './components/home/home.component';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxQRCodeModule,
+    FormsModule,
+    NgApexchartsModule
   ],
-  providers: [],
+  providers: [
+    InvitadoGuard,
+    UsuariosGuard,
+    AdministradorGuard,
+    NoInvitadoGuard,
+    NoAdministradorGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

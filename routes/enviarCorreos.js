@@ -15,7 +15,7 @@ router.post("/enviar", (peticion, respuesta) => {
         from: "recetarioweb@outlook.com",
         to: "erikgomez198755@outlook.com",
         subject: peticion.body.asunto,
-        html: "<h2>Se ha recibido una pregunta en MakeYourFood.</h2>" +
+        html: "<h2>Se ha recibido un mensaje en MakeYourFood.</h2>" +
         "<p><b>Nombre completo del remitente:</b> " + peticion.body.nombreCompleto + ".</p>" +
         "<p><b>Nombre de usuario:</b> " + peticion.body.nombreUsuario + ".</p><br>" +
         "<h2 style='margin-top: 5px;'>Mensaje.</h2><p>" + peticion.body.mensaje + "</p>"

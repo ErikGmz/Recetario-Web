@@ -2,22 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
-import { threadId } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacionService {
-  datosUsuarioActual: any;
-  informacionAdicional = {
-    nombreCompleto: "Invitado",
-    permisos: ""
-  };
+  referenciaVentana: any;
+  imagenesRecetas!: Map<String, any>;
+  imagenReceta!: any;
+  datosUsuarioActual: any = JSON.parse(localStorage.getItem('datosUsuario')!);
+  informacionAdicional = JSON.parse(localStorage.getItem('informacionExtraUsuario')!);
 
   constructor(public autenticacion: AngularFireAuth, 
   public router: Router, public baseDatos: AngularFirestore, 
-  public ngZone: NgZone, private httpClient: HttpClient) { 
+  public ngZone: NgZone, private httpClient: HttpClient,
+  public storage: AngularFireStorage) { 
+    if(this.datosUsuarioActual === null) {
+      this.datosUsuarioActual = {}
+    }
+    if(this.informacionAdicional === null) {
+      this.informacionAdicional = {
+        nombreCompleto: "",
+        permisos: "",
+        recetasFavoritas: []
+      }
+    }
+
     //Actualizar la información del usuario en el
     //localStorage cuando ocurra un inicio o cierre
     //de sesión.
@@ -25,19 +37,20 @@ export class AutenticacionService {
       if(usuario) {
         this.datosUsuarioActual = usuario;
         localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
-        JSON.parse(localStorage.getItem('datosUsuario')!);
 
         this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
-          (datos?.nombreCompleto === undefined ? this.informacionAdicional.nombreCompleto = "Invitado"
-          : this.informacionAdicional.nombreCompleto = datos.nombreCompleto);
-
-          (datos?.permisos === undefined ? this.informacionAdicional.permisos = ""
-          : this.informacionAdicional.permisos = datos.permisos);
+          console.log(datos);
+          if(datos !== null) {
+            this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
+            this.informacionAdicional.permisos = datos.permisos;
+            this.informacionAdicional.recetasFavoritas = datos.recetasFavoritas;
+            localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
+          }
         });
       } 
       else {
         localStorage.setItem('datosUsuario', 'null');
-        JSON.parse(localStorage.getItem('datosUsuario')!);
+        localStorage.setItem('informacionExtraUsuario', 'null');
       }
     });
   }
@@ -62,19 +75,70 @@ export class AutenticacionService {
     .catch(this.desplegarError);
   }
 
+  enviarMensajeTelefono(numeroTelefono: string) {
+    return this.autenticacion.signInWithPhoneNumber(numeroTelefono, this.referenciaVentana.recaptchaVerifier)
+    .then((resultado) => {
+      alert("El código de verificación fue enviado al número " + numeroTelefono + ".");
+      this.referenciaVentana.confirmationResult = resultado;
+      this.referenciaVentana.recaptchaVerifier.clear();
+      return true;
+    })
+    .catch((error) => {this.desplegarError(error); return false;});
+  }
+
+  registrarUsuarioTelefono(nombreCompleto: string, nombreUsuario: string, codigoVerificacion: string) {
+    this.referenciaVentana.confirmationResult.confirm(codigoVerificacion)
+    .then((credencialUsuario: any) => {
+      //Almacenar el usuario nuevo si no se encontraba en la base de datos.
+      this.obtenerUsuario(credencialUsuario.user?.uid).subscribe((datos: any) => {
+        console.log(datos);
+        if(datos === null) {
+          //Completar los datos del perfil del usuario nuevo.
+          credencialUsuario.user?.updateProfile({displayName: nombreUsuario})
+          .then(() => {
+            this.agregarUsuarioABaseDatos(nombreCompleto);
+            this.informacionAdicional.nombreCompleto = nombreCompleto;
+            this.informacionAdicional.permisos = "Usuario";
+            this.informacionAdicional.recetasFavoritas = [];
+
+            //Almacenar y cargar toda la información del usuario nuevo.
+            this.datosUsuarioActual = credencialUsuario.user;
+          })
+          .catch(this.desplegarError);
+        }
+        else {
+          this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
+          this.informacionAdicional.permisos = datos.permisos;
+          this.informacionAdicional.recetasFavoritas = [];
+
+          //Almacenar y cargar toda la información del usuario nuevo.
+          this.datosUsuarioActual = credencialUsuario.user;
+        }
+
+        localStorage.setItem('datosUsuario', JSON.stringify(this.datosUsuarioActual));
+        localStorage.setItem('informacionExtraUsuario', JSON.stringify(this.informacionAdicional));
+        alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
+        this.router.navigate(['/']);
+      });
+    })
+    .catch(this.desplegarError);
+  }
+
   agregarUsuarioABaseDatos(nombreCompleto: string) {
     //Obtener los datos del usuario actual y registrarlos en la base de datos.
     let datosUsuarioNuevo = {
       ID: this.datosUsuarioActual.uid,
-      correoElectronico: this.datosUsuarioActual.email,
+      correoElectronico: this.datosUsuarioActual?.email,
       nombreCompleto: nombreCompleto,
       nombreUsuario: this.datosUsuarioActual.displayName,
-      permisos: "Usuario"
+      permisos: "Usuario",
+      numeroTelefono: this.datosUsuarioActual?.phoneNumber,
+      recetasFavoritas: []
     }
 
-    this.httpClient.post("/api/usuarios/agregar", datosUsuarioNuevo).subscribe((datos) => {
+    this.httpClient.post("/api/usuarios/agregar", datosUsuarioNuevo, {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
-    })
+    });
   }
 
   borrarUsuarioActual() {
@@ -82,21 +146,29 @@ export class AutenticacionService {
       if(confirm("¿Realmente desea borrar su cuenta? (Operación permanente).")) {
         this.autenticacion.currentUser
         .then((usuario) => {
+          this.informacionAdicional.recetasFavoritas.forEach((IDReceta: any) => {
+            this.restarFavorito(IDReceta).subscribe((datos: any) => {
+              console.log(datos);
+            })
+          })
+
           //Borrar el usuario y todos sus datos registrados.
           usuario?.delete();
-          this.eliminarUsuarioBaseDatos(this.datosUsuarioActual.uid);
-          alert("El usuario fue exitosamente eliminado.");
-          this.cerrarSesion();
+          if(this.eliminarUsuarioBaseDatos(this.datosUsuarioActual.uid)) {
+            alert("El usuario fue exitosamente eliminado.");
+            this.cerrarSesion();
+          }
         })
         .catch(this.desplegarError);
       }
     }
   }
 
-  eliminarUsuarioBaseDatos(ID: string) {
-    this.httpClient.delete("/api/usuarios/eliminar/" + ID).subscribe((datos) => {
+  eliminarUsuarioBaseDatos(ID: string): boolean {
+    this.httpClient.delete("/api/usuarios/eliminar/" + ID, {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
     })
+    return true;
   }
 
   obtenerUsuario(ID: string): any {
@@ -104,7 +176,82 @@ export class AutenticacionService {
   }
 
   obtenerUsuarios(): any {
-    this.httpClient.get("/api/usuarios/obtener-todos");
+    return this.httpClient.get("/api/usuarios/obtener-todos");
+  }
+
+  registrarReceta(datosReceta: any, imagenReceta: any): boolean {
+    this.httpClient.post("/api/recetas/agregar", datosReceta, {responseType: "text"}).subscribe((datos) => {
+      console.log(datos);
+      this.storage.upload("recetas/" + datosReceta.nombreImagen, imagenReceta);
+    });
+    return true;
+  }
+
+  obtenerReceta(ID: string): any {
+    return this.httpClient.get("/api/recetas/obtener/" + ID);
+  }
+
+  obtenerRecetas(): any {
+    return this.httpClient.get("/api/recetas/obtener-todos");
+  }
+
+  obtenerImagenesRecetas(listaRecetas: any): boolean {
+    this.imagenesRecetas = new Map<String, any>();
+
+    listaRecetas.forEach((receta: any) => {
+      this.storage.ref("recetas/" + receta.nombreImagen).getDownloadURL().subscribe((URL) => {
+        this.imagenesRecetas.set(receta.nombreImagen, URL);
+      });
+    })
+    return true;
+  }
+
+  obtenerImagenReceta(nombreImagen: string): boolean {
+    console.log(nombreImagen);
+    this.storage.ref("recetas/" + nombreImagen).getDownloadURL().subscribe((URL) => {
+      this.imagenReceta = URL;
+    });
+    return true;
+  }
+
+  actualizarReceta(rutaImagenPrevia: string, datosReceta: any, imagenReceta: any): boolean {
+    this.httpClient.put("/api/recetas/actualizar/" + datosReceta.ID, datosReceta, {responseType: "text"}).subscribe((datos) => {
+      console.log(datos);
+      this.storage.ref("recetas/" + rutaImagenPrevia).delete();
+      this.storage.upload("recetas/" + datosReceta.nombreImagen, imagenReceta);
+    });
+    return true;
+  }
+
+  eliminarReceta(IDReceta: string, rutaImagenReceta: string): boolean {
+    this.httpClient.delete("/api/recetas/eliminar/" + IDReceta, {responseType: "text"}).subscribe((datos) => {
+      this.storage.ref("recetas/" + rutaImagenReceta).delete();
+      this.obtenerUsuarios().subscribe((usuarios: any) => {
+        usuarios.forEach((usuario: any) => {
+          this.removerFavorito(usuario.ID, IDReceta).subscribe((resultado: any) => {
+            console.log(resultado);
+          });
+        });
+      });
+      console.log(datos);
+    });
+    return true;
+  }
+
+  agregarFavorito(IDusuario: string, IDReceta: string) {
+    return this.httpClient.put("api/usuarios/agregarFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
+  }
+
+  removerFavorito(IDusuario: string, IDReceta: string) {
+    return this.httpClient.put("api/usuarios/removerFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
+  }
+
+  incrementarFavorito(IDReceta: string) {
+    return this.httpClient.put("api/recetas/incrementarFavorito/" + IDReceta, null, {responseType: "text"});
+  }
+
+  restarFavorito(IDReceta: string) {
+    return this.httpClient.put("api/recetas/restarFavorito/" + IDReceta, null, {responseType: "text"});
   }
 
   iniciarSesion(correo: string, clave: string) {
@@ -114,11 +261,14 @@ export class AutenticacionService {
       this.datosUsuarioActual = credencialUsuario.user;
 
       this.obtenerUsuario(this.datosUsuarioActual.uid).subscribe((datos: any) => {
+        console.log(datos);
         this.informacionAdicional.nombreCompleto = datos.nombreCompleto;
         this.informacionAdicional.permisos = datos.permisos;
+        this.informacionAdicional.recetasFavoritas = datos.recetasFavoritas;
+
+        alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
+        this.router.navigate(['/']);
       });
-      alert("La sesión fue exitosamente iniciada. Bienvenido, usuario " + this.datosUsuarioActual.displayName + ".");
-      this.router.navigate(['/']);
     })
     .catch(this.desplegarError);
   }
@@ -127,10 +277,12 @@ export class AutenticacionService {
     this.autenticacion.signOut().then(() => {
       //Reiniciar la información del usuario actual.
       localStorage.removeItem('datosUsuario');
+      localStorage.removeItem('informacionExtraUsuario');
       this.datosUsuarioActual = null;
       this.informacionAdicional = {
         nombreCompleto: "Invitado",
-        permisos: ""
+        permisos: "",
+        recetasFavoritas: []
       };
       this.router.navigate(['/inicio-sesion']);
     })

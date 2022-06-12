@@ -1,0 +1,10 @@
+#recaptcha-container {
+    overflow: hidden;
+}
+
+@media(max-width: 443px) {
+    #recaptcha-container {
+        border-radius: 4px;
+        border-right: 1px solid #d8d8d8;
+    }
+}

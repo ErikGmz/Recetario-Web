@@ -1,0 +1,105 @@
+<div class="border border-2 mx-0 mx-lg-4">
+  <h3 class="text-center py-4 bg-light border-bottom mb-0">Inicio con teléfono</h3>
+  <div class="px-4 px-md-5 pt-5">
+    <form novalidate [formGroup]="datosRegistro">
+      <div class="row">
+        <div class="col-12 mb-3">
+          <h4 class="mb-0">Datos del usuario</h4>
+        </div>
+        
+        <div class="col-12 col-lg-6 mb-4 mb-lg-2">
+          <label for="nombre-completo" class="form-label">Nombre completo<span class="text-danger"> *</span></label>
+          <input #nombreCompleto type="text" [ngClass]="{'is-invalid':!datosRegistro.get('nombreCompleto')?.valid && datosRegistro.controls['nombreCompleto'].dirty, 'is-valid':datosRegistro.get('nombreCompleto')?.valid}" 
+          class="form-control" id="nombre-completo" required autocomplete="OFF" formControlName="nombreCompleto"
+          [attr.readonly]="autenticacion.referenciaVentana.confirmationResult">
+          <div *ngIf="!datosRegistro.controls['nombreCompleto']?.errors" class="valid-feedback">Nombre completo correcto.</div>
+          <div *ngIf="datosRegistro.controls['nombreCompleto'].errors?.['required']" class="invalid-feedback">Nombre completo obligatorio. </div>  
+          <div *ngIf="datosRegistro.controls['nombreCompleto'].errors?.['minlength']" class="invalid-feedback">El nombre completo debe tener mínimo 10 caracteres.</div>  
+          <div *ngIf="datosRegistro.controls['nombreCompleto'].errors?.['maxlength']" class="invalid-feedback">El nombre completo debe tener máximo 80 caracteres.</div>  
+        </div>
+  
+        <div class="col-12 col-lg-6 mb-2">
+          <label for="nombre-usuario" class="form-label">Nombre de usuario<span class="text-danger"> *</span></label>
+          <input #nombreUsuario type="text" [ngClass]="{'is-invalid':!datosRegistro.get('nombreUsuario')?.valid && datosRegistro.controls['nombreUsuario'].dirty, 'is-valid':datosRegistro.get('nombreUsuario')?.valid}" 
+          class="form-control" id="nombre-usuario" required autocomplete="OFF" formControlName="nombreUsuario"
+          [attr.readonly]="autenticacion.referenciaVentana.confirmationResult">
+          <div *ngIf="!datosRegistro.controls['nombreUsuario']?.errors" class="valid-feedback">Nombre de usuario correcto.</div> 
+          <div *ngIf="datosRegistro.controls['nombreUsuario'].errors?.['required']" class="invalid-feedback">Nombre de usuario obligatorio.</div>   
+          <div *ngIf="datosRegistro.controls['nombreUsuario'].errors?.['minlength']" class="invalid-feedback">El nombre de usuario debe tener mínimo 5 caracteres.</div>  
+          <div *ngIf="datosRegistro.controls['nombreUsuario'].errors?.['maxlength']" class="invalid-feedback">El nombre de usuario debe tener máximo 20 caracteres.</div>  
+        </div>
+  
+        <div class="col-12 mb-5">
+          <div class="form-text">Nota: estos datos solo se almacenarán si el número telefónico no está registrado.</div>
+        </div>
+
+        <div class="col-12 mb-3">
+          <h4 class="mb-0">Teléfono</h4>
+        </div>
+  
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+          <label for="pais-numero" class="form-label">País<span class="text-danger"> *</span></label>
+          <div class="input-group">
+            <div class="input-group-text">+</div>
+            <input #paisNumero type="text" [ngClass]="{'is-invalid':!datosRegistro.get('paisNumero')?.valid && datosRegistro.controls['paisNumero'].dirty, 'is-valid':datosRegistro.get('paisNumero')?.valid}" 
+            class="form-control" id="pais-numero" required autocomplete="OFF" formControlName="paisNumero"
+            [attr.readonly]="autenticacion.referenciaVentana.confirmationResult">
+          </div>
+        </div>
+  
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+          <label for="zona-numero" class="form-label">Zona<span class="text-danger"> *</span></label>
+          <input #zonaNumero type="text" [ngClass]="{'is-invalid':!datosRegistro.get('zonaNumero')?.valid && datosRegistro.controls['zonaNumero'].dirty, 'is-valid':datosRegistro.get('zonaNumero')?.valid}" 
+          class="form-control" id="zona-numero" required autocomplete="OFF" formControlName="zonaNumero"
+          [attr.readonly]="autenticacion.referenciaVentana.confirmationResult">
+        </div>
+  
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+          <label for="prefijo-numero" class="form-label">Prefijo<span class="text-danger"> *</span></label>
+          <input #prefijoNumero type="text" [ngClass]="{'is-invalid':!datosRegistro.get('prefijoNumero')?.valid && datosRegistro.controls['prefijoNumero'].dirty, 'is-valid':datosRegistro.get('prefijoNumero')?.valid}" 
+          class="form-control" id="prefijo-numero" required autocomplete="OFF" formControlName="prefijoNumero"
+          [attr.readonly]="autenticacion.referenciaVentana.confirmationResult">
+        </div>
+  
+        <div class="col-12 col-md-6 col-lg-3 mb-5">
+          <label for="linea-numero" class="form-label">Línea<span class="text-danger"> *</span></label>
+          <input #lineaNumero type="text" [ngClass]="{'is-invalid':!datosRegistro.get('lineaNumero')?.valid && datosRegistro.controls['lineaNumero'].dirty, 'is-valid':datosRegistro.get('lineaNumero')?.valid}" 
+          class="form-control" id="linea-numero" required autocomplete="OFF" formControlName="lineaNumero"
+          [attr.readonly]="autenticacion.referenciaVentana.confirmationResult">
+        </div>
+      </div>
+  
+      <div class="col-12 mb-3">
+        <h4 [ngClass]="{'mb-3':!autenticacion.referenciaVentana.confirmationResult, 'mb-0':autenticacion.referenciaVentana.confirmationResult}">
+          Captcha
+        </h4>
+        <div id="recaptcha-container"></div>
+      </div>
+  
+      <button type="submit" class="btn btn-success mb-5" (click)="enviarMensajeVerificacion(paisNumero.value, zonaNumero.value, prefijoNumero.value, lineaNumero.value)"
+      [disabled]="datosRegistro.invalid || autenticacion.referenciaVentana.confirmationResult || !captchaResuelto">
+        Enviar código
+      </button>
+    </form>
+
+    <form novalidate [formGroup]="numeroVerificacion" 
+    *ngIf="autenticacion.referenciaVentana.confirmationResult">
+      <div class="col-12 mb-3">
+        <h4 class="mb-0">Verificar usuario</h4>
+      </div>
+
+      <div class="col-12 col-md-6 mb-4">
+        <label for="codigo-verificacion" class="form-label">Código de verificación<span class="text-danger"> *</span></label>
+        <input #codigoVerificacion type="text" [ngClass]="{'is-invalid':!numeroVerificacion.get('codigoVerificacion')?.valid && numeroVerificacion.controls['codigoVerificacion'].dirty, 'is-valid':numeroVerificacion.get('codigoVerificacion')?.valid}" 
+        class="form-control" id="codigo-verificacion" required autocomplete="OFF" formControlName="codigoVerificacion">
+        <div *ngIf="numeroVerificacion.controls['codigoVerificacion'].errors?.['required']" class="invalid-feedback">Código de verificación obligatorio. </div>  
+      </div>
+
+      <button type="submit" class="btn btn-primary mb-5" [disabled]="numeroVerificacion.invalid"
+      (click)="realizarInicioSesion(nombreCompleto.value.trim(), nombreUsuario.value.trim(),
+      codigoVerificacion.value.trim())">
+        Iniciar con teléfono
+      </button>
+    </form>
+  </div>
+</div>
