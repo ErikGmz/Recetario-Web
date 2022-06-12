@@ -8,7 +8,9 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 })
 export class ListaRecetasComponent implements OnInit {
   @Input() recetasPrevias!: any;
+  @Input() busquedaUnica!: boolean;
   listaRecetas!: any[];
+  recetasDisponibles: boolean = false;
   favoritosRecetas: Map<String, boolean> = new Map<String, boolean>(); 
   mostrarLista: boolean = false;
   operacionesFavoritos: boolean = false;
@@ -16,8 +18,10 @@ export class ListaRecetasComponent implements OnInit {
   constructor(public autenticacion: AutenticacionService) { }
 
   ngOnInit(): void {
-    if(this.recetasPrevias === undefined) this.operacionesFavoritos = true;
-  
+    if(this.recetasPrevias === undefined) {
+      this.operacionesFavoritos = true;
+    }
+
     if(this.operacionesFavoritos) {
       this.autenticacion.obtenerRecetas().subscribe((datos: any) => {
         console.log(datos);
@@ -29,7 +33,19 @@ export class ListaRecetasComponent implements OnInit {
           });
         }
         this.mostrarLista = this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
+        if(this.verificarExistenciaRecetas()) this.recetasDisponibles = true;
       });
+    }
+    else if(this.busquedaUnica) {
+      if(this.recetasPrevias !== null) {
+        this.listaRecetas = new Array(this.recetasPrevias);
+        this.mostrarLista = this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
+        if(this.verificarExistenciaRecetas()) this.recetasDisponibles = true;
+      }
+      else {
+        this.listaRecetas = [];
+        this.mostrarLista = true;
+      }
     }
     else {
       this.listaRecetas = [];
@@ -44,8 +60,13 @@ export class ListaRecetasComponent implements OnInit {
         });
 
         this.mostrarLista = this.autenticacion.obtenerImagenesRecetas(this.listaRecetas);
+        if(this.verificarExistenciaRecetas()) this.recetasDisponibles = true;
       });
     }
+  }
+
+  verificarExistenciaRecetas(): boolean {
+    return this.listaRecetas.length > 0;
   }
 
   verificarRecetaFavorita(IDReceta: string) {

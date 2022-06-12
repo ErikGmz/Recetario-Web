@@ -13,12 +13,12 @@ import { EditarRecetaComponent } from './components/editar-receta/editar-receta.
 import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
 import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafica-favoritos.component';
 import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favoritas/lista-recetas-favoritas.component';
+import { BuscarRecetaComponent } from './components/buscar-receta/buscar-receta.component';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
 import { AdministradorGuard } from './guards/administrador.guard';
 import { NoInvitadoGuard } from './guards/no-invitado.guard';
-import { NoUsuariosGuard } from './guards/no-usuarios.guard';
 import { NoAdministradorGuard } from './guards/no-administrador.guard';
 
 const routes: Routes = [
@@ -36,6 +36,7 @@ const routes: Routes = [
   { path: "eliminar-receta", component: EliminarRecetaComponent, canActivate: [AdministradorGuard] },
   { path: "grafica-favoritos", component: GraficaFavoritosComponent, canActivate: [AdministradorGuard] },
   { path: "lista-recetas-favoritas", component: ListaRecetasFavoritasComponent, canActivate: [UsuariosGuard] },
+  { path: "buscar-receta", component: BuscarRecetaComponent, canActivate: [UsuariosGuard] },
 ];
 
 @NgModule({

@@ -16,7 +16,6 @@ import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
 import { AdministradorGuard } from './guards/administrador.guard';
 import { NoInvitadoGuard } from './guards/no-invitado.guard';
-import { NoUsuariosGuard } from './guards/no-usuarios.guard';
 import { NoAdministradorGuard } from './guards/no-administrador.guard';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +36,7 @@ import { EditarRecetaComponent } from './components/editar-receta/editar-receta.
 import { EliminarRecetaComponent } from './components/eliminar-receta/eliminar-receta.component';
 import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafica-favoritos.component';
 import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favoritas/lista-recetas-favoritas.component';
+import { BuscarRecetaComponent } from './components/buscar-receta/buscar-receta.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,8 @@ import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favor
     EditarRecetaComponent,
     EliminarRecetaComponent,
     GraficaFavoritosComponent,
-    ListaRecetasFavoritasComponent
+    ListaRecetasFavoritasComponent,
+    BuscarRecetaComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +78,6 @@ import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favor
     UsuariosGuard,
     AdministradorGuard,
     NoInvitadoGuard,
-    NoUsuariosGuard,
     NoAdministradorGuard
   ],
   bootstrap: [AppComponent]
