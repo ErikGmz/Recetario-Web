@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
@@ -9,29 +9,29 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
 })
 export class AgregarRecetaComponent implements OnInit {
   imagenReceta!: any;
-  datosRegistro!: FormGroup;
+  datosRegistro!: UntypedFormGroup;
   cantidadCamposIngredientes: number = 1;
   cantidadCamposPasos: number = 1;
   @Input() recetaAEditar!: any;
   habilitarEdicion!: boolean;
 
   constructor(public autenticacion: AutenticacionService,
-  private formBuilder: FormBuilder) { 
+  private formBuilder: UntypedFormBuilder) { 
   }
 
   ngOnInit(): void {
     this.habilitarEdicion = (this.recetaAEditar !== undefined);
 
     this.datosRegistro = this.formBuilder.group({
-      nombreReceta: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
-      tipoReceta: new FormControl("", Validators.required),
-      descripcionReceta: new FormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(300)]),
-      imagenReceta: new FormControl("", [Validators.required, this.verificarArchivoImagen]),
-      datosIngredientes: new FormGroup({
-        ingrediente1Receta: new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)])
+      nombreReceta: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      tipoReceta: new UntypedFormControl("", Validators.required),
+      descripcionReceta: new UntypedFormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(300)]),
+      imagenReceta: new UntypedFormControl("", [Validators.required, this.verificarArchivoImagen]),
+      datosIngredientes: new UntypedFormGroup({
+        ingrediente1Receta: new UntypedFormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)])
       }),
-      datosPasos: new FormGroup({
-        paso1Receta: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)])
+      datosPasos: new UntypedFormGroup({
+        paso1Receta: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)])
       })
     });
 
@@ -76,7 +76,7 @@ export class AgregarRecetaComponent implements OnInit {
     this.imagenReceta = evento.target.files[0];
   }
 
-  verificarArchivoImagen(campoImagen: FormControl) {
+  verificarArchivoImagen(campoImagen: UntypedFormControl) {
     const archivo = campoImagen.value;
     if(archivo) {
       const extension = archivo.split('.')[1].toLowerCase();
@@ -111,13 +111,13 @@ export class AgregarRecetaComponent implements OnInit {
 
   agregarCampoIngrediente() {
     this.cantidadCamposIngredientes++;
-    let ingredientes = this.datosRegistro.get("datosIngredientes") as FormGroup;
+    let ingredientes = this.datosRegistro.get("datosIngredientes") as UntypedFormGroup;
     ingredientes.addControl(`ingrediente${this.cantidadCamposIngredientes}Receta`,
-    new FormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)]));
+    new UntypedFormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)]));
   }
   
   eliminarCampoIngrediente() {
-    let ingredientes = this.datosRegistro.get("datosIngredientes") as FormGroup;
+    let ingredientes = this.datosRegistro.get("datosIngredientes") as UntypedFormGroup;
     ingredientes.removeControl(`ingrediente${this.cantidadCamposIngredientes--}Receta`);
   }
 
@@ -140,13 +140,13 @@ export class AgregarRecetaComponent implements OnInit {
 
   agregarCampoPaso() {
     this.cantidadCamposPasos++;
-    let pasos = this.datosRegistro.get("datosPasos") as FormGroup;
+    let pasos = this.datosRegistro.get("datosPasos") as UntypedFormGroup;
     pasos.addControl(`paso${this.cantidadCamposPasos}Receta`,
-    new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)]));
+    new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)]));
   }
 
   eliminarCampoPaso() {
-    let pasos = this.datosRegistro.get("datosPasos") as FormGroup;
+    let pasos = this.datosRegistro.get("datosPasos") as UntypedFormGroup;
     pasos.removeControl(`paso${this.cantidadCamposPasos--}Receta`);
   }
 

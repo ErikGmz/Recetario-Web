@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { NumeroTelefono } from './numeroTelefono';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { VentanaService } from 'src/app/services/ventana.service';
@@ -11,8 +11,8 @@ import firebase from 'firebase/compat/app';
   styleUrls: ['./autenticacion-telefono.component.css']
 })
 export class AutenticacionTelefonoComponent implements OnInit, OnDestroy {
-  datosRegistro!: FormGroup;
-  numeroVerificacion!: FormGroup;
+  datosRegistro!: UntypedFormGroup;
+  numeroVerificacion!: UntypedFormGroup;
   numeroTelefono = new NumeroTelefono();
   captchaResuelto: boolean = false;
 
@@ -20,23 +20,23 @@ export class AutenticacionTelefonoComponent implements OnInit, OnDestroy {
   public autenticacion: AutenticacionService) { }
 
   ngOnInit(): void {
-    this.datosRegistro = new FormGroup({
-      nombreCompleto: new FormControl({value: "", disabled: false}, 
+    this.datosRegistro = new UntypedFormGroup({
+      nombreCompleto: new UntypedFormControl({value: "", disabled: false}, 
       [Validators.required, Validators.minLength(10), Validators.maxLength(80)]),
-      nombreUsuario: new FormControl({value: "", disabled: false}, 
+      nombreUsuario: new UntypedFormControl({value: "", disabled: false}, 
       [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
-      paisNumero: new FormControl({value: "", disabled: false}, 
+      paisNumero: new UntypedFormControl({value: "", disabled: false}, 
       [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("^[0-9]*$")]),
-      zonaNumero: new FormControl({value: "", disabled: false}, 
+      zonaNumero: new UntypedFormControl({value: "", disabled: false}, 
       [Validators.required, Validators.minLength(2), Validators.maxLength(3), Validators.pattern("^[0-9]*$")]),
-      prefijoNumero: new FormControl({value: "", disabled: false}, 
+      prefijoNumero: new UntypedFormControl({value: "", disabled: false}, 
       [Validators.required, Validators.minLength(2), Validators.maxLength(3), Validators.pattern("^[0-9]*$")]),
-      lineaNumero: new FormControl({value: "", disabled: false}, 
+      lineaNumero: new UntypedFormControl({value: "", disabled: false}, 
       [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("^[0-9]*$")]),
     });
     
-    this.numeroVerificacion = new FormGroup({
-      codigoVerificacion: new FormControl("", Validators.required)
+    this.numeroVerificacion = new UntypedFormGroup({
+      codigoVerificacion: new UntypedFormControl("", Validators.required)
     });
 
     this.autenticacion.referenciaVentana = this.ventana.referenciaVentana;

@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { InvitadoGuard } from './guards/invitado.guard';
 import { UsuariosGuard } from './guards/usuarios.guard';
@@ -38,6 +39,7 @@ import { GraficaFavoritosComponent } from './components/grafica-favoritos/grafic
 import { ListaRecetasFavoritasComponent } from './components/lista-recetas-favoritas/lista-recetas-favoritas.component';
 import { BuscarRecetaComponent } from './components/buscar-receta/buscar-receta.component';
 import { ControlesAccesibilidadComponent } from './components/controles-accesibilidad/controles-accesibilidad.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -73,14 +75,21 @@ import { ControlesAccesibilidadComponent } from './components/controles-accesibi
     HttpClientModule,
     NgxQRCodeModule,
     FormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     InvitadoGuard,
     UsuariosGuard,
     AdministradorGuard,
     NoInvitadoGuard,
-    NoAdministradorGuard
+    NoAdministradorGuard,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

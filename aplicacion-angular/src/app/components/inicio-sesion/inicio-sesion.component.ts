@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
@@ -8,14 +8,14 @@ import { AutenticacionService } from 'src/app/services/autenticacion.service';
   styleUrls: ['./inicio-sesion.component.css']
 })
 export class InicioSesionComponent implements OnInit {
-  datosInicioSesion!: FormGroup;
+  datosInicioSesion!: UntypedFormGroup;
 
   constructor(public autenticacion: AutenticacionService) { }
 
   ngOnInit(): void {
-    this.datosInicioSesion = new FormGroup({
-      correoElectronico: new FormControl("", Validators.required),
-      clave: new FormControl("", Validators.required)
+    this.datosInicioSesion = new UntypedFormGroup({
+      correoElectronico: new UntypedFormControl("", Validators.required),
+      clave: new UntypedFormControl("", Validators.required)
     });
   }
 
