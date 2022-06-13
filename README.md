@@ -46,7 +46,7 @@ _**Ejecución del servidor Node.**_
 >$ npm install
 >$ npm run build
 >```
->_**2.** Desplazarse a la carpeta raíz del proyecto e introducir los siguiente comandos:_
+>_**2.** Desplazarse a la carpeta raíz del proyecto e introducir los siguientes comandos:_
 >```
 >$ cd ..
 >$ npm install
