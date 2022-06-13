@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(express.static(process.cwd() + "/aplicacion-angular/dist/proyecto/"));
 
 app.get('/', (peticion, respuesta) => {
-	res.sendFile(process.cwd() + "/aplicacion-angular/dist/proyecto/index.html")
+	respuesta.sendFile(process.cwd() + "/aplicacion-angular/dist/proyecto/index.html")
 });
 
 app.listen(port, () => {

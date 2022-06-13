@@ -23,15 +23,15 @@ export class AgregarRecetaComponent implements OnInit {
     this.habilitarEdicion = (this.recetaAEditar !== undefined);
 
     this.datosRegistro = this.formBuilder.group({
-      nombreReceta: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
+      nombreReceta: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
       tipoReceta: new UntypedFormControl("", Validators.required),
-      descripcionReceta: new UntypedFormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(300)]),
+      descripcionReceta: new UntypedFormControl("", [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
       imagenReceta: new UntypedFormControl("", [Validators.required, this.verificarArchivoImagen]),
       datosIngredientes: new UntypedFormGroup({
-        ingrediente1Receta: new UntypedFormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)])
+        ingrediente1Receta: new UntypedFormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(70)])
       }),
       datosPasos: new UntypedFormGroup({
-        paso1Receta: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)])
+        paso1Receta: new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(70)])
       })
     });
 
@@ -97,7 +97,7 @@ export class AgregarRecetaComponent implements OnInit {
   }
 
   desactivarBotonAgregarCampoIngrediente() {
-    return(this.cantidadCamposIngredientes > 19);
+    return(this.cantidadCamposIngredientes > 6);
   }
 
   indicarInvalidezCampoIngrediente(numeroCampo: number) {
@@ -113,7 +113,7 @@ export class AgregarRecetaComponent implements OnInit {
     this.cantidadCamposIngredientes++;
     let ingredientes = this.datosRegistro.get("datosIngredientes") as UntypedFormGroup;
     ingredientes.addControl(`ingrediente${this.cantidadCamposIngredientes}Receta`,
-    new UntypedFormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(50)]));
+    new UntypedFormControl("", [Validators.required, Validators.minLength(2), Validators.maxLength(70)]));
   }
   
   eliminarCampoIngrediente() {
@@ -126,7 +126,7 @@ export class AgregarRecetaComponent implements OnInit {
   }
 
   desactivarBotonAgregarCampoPaso() {
-    return(this.cantidadCamposPasos > 19);
+    return(this.cantidadCamposPasos > 6);
   }
 
   indicarInvalidezCampoPaso(numeroCampo: number) {
@@ -142,7 +142,7 @@ export class AgregarRecetaComponent implements OnInit {
     this.cantidadCamposPasos++;
     let pasos = this.datosRegistro.get("datosPasos") as UntypedFormGroup;
     pasos.addControl(`paso${this.cantidadCamposPasos}Receta`,
-    new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(200)]));
+    new UntypedFormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(70)]));
   }
 
   eliminarCampoPaso() {

@@ -10,7 +10,7 @@
         <div *ngIf="!datosRegistro.controls['nombreReceta']?.errors" class="valid-feedback">Nombre de la receta correcto.</div>
         <div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['required']" class="invalid-feedback">Nombre de la receta obligatorio. </div>  
         <div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['minlength']" class="invalid-feedback">El nombre de la receta debe tener mínimo 5 caracteres.</div>  
-        <div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['maxlength']" class="invalid-feedback">El nombre de la receta debe tener máximo 100 caracteres.</div>  
+        <div *ngIf="datosRegistro.controls['nombreReceta'].errors?.['maxlength']" class="invalid-feedback">El nombre de la receta debe tener máximo 50 caracteres.</div>  
       </div>
 
       <div class="col-12 col-lg-6 mb-4">
@@ -37,7 +37,7 @@
         <div *ngIf="!datosRegistro.controls['descripcionReceta']?.errors" class="valid-feedback">Descripción de la receta correcta.</div>
         <div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['required']" class="invalid-feedback">Descripción de la receta obligatoria.</div>  
         <div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['minlength']" class="invalid-feedback">La descripción de la receta debe tener mínimo 10 caracteres.</div>  
-        <div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['maxlength']" class="invalid-feedback">La descripción de la receta debe tener máximo 300 caracteres.</div>  
+        <div *ngIf="datosRegistro.controls['descripcionReceta'].errors?.['maxlength']" class="invalid-feedback">La descripción de la receta debe tener máximo 100 caracteres.</div>  
       </div>
 
       <div class="col-12 mb-4">
@@ -73,7 +73,7 @@
             [ngClass]="{'is-invalid':indicarInvalidezCampoIngrediente(i + 1), 'is-valid':indicarValidezCampoIngrediente(i + 1)}">  
             <div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['required']" class="invalid-feedback mt-2">Ingrediente obligatorio.</div> 
             <div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['minlength']" class="invalid-feedback mt-2">El ingrediente debe tener mínimo 2 caracteres.</div> 
-            <div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['maxlength']" class="invalid-feedback mt-2">El ingrediente debe tener máximo 50 caracteres.</div> 
+            <div *ngIf="datosRegistro.get('datosIngredientes')?.get('ingrediente' + (i + 1) + 'Receta')?.errors?.['maxlength']" class="invalid-feedback mt-2">El ingrediente debe tener máximo 70 caracteres.</div> 
           </div>  
         </div>
       </div>
@@ -101,7 +101,7 @@
             [ngClass]="{'is-invalid':indicarInvalidezCampoPaso(i + 1), 'is-valid':indicarValidezCampoPaso(i + 1)}">  
             <div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['required']" class="invalid-feedback mt-2">Paso obligatorio.</div> 
             <div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['minlength']" class="invalid-feedback mt-2">El paso debe tener mínimo 5 caracteres.</div> 
-            <div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['maxlength']" class="invalid-feedback mt-2">El paso debe tener máximo 200 caracteres.</div> 
+            <div *ngIf="datosRegistro.get('datosPasos')?.get('paso' + (i + 1) + 'Receta')?.errors?.['maxlength']" class="invalid-feedback mt-2">El paso debe tener máximo 70 caracteres.</div> 
           </div>  
         </div>
       </div>
