@@ -157,135 +157,146 @@
   </div>
 
   <br><br>
-    <div>
-        <h1 class="display-5" #titulo3> Ayuda </h1>
-        <p class="lead fs-3 fst-italic mb-0" #titulo4>  Te ayudamos en tu proceso de navegación dentro de nuestra página ;)</p>
-        <div *ngIf="accesibilidad.habilitarLectura" class="mt-2 mb-0">
-            <app-controles-accesibilidad [textoLectura]="titulo3.innerText + '. ' + titulo4.innerText"> 
-            </app-controles-accesibilidad>
-        </div>
+  <div>
+    <h1 class="display-5" #titulo3> Ayuda </h1>
+    <p class="lead fs-3 fst-italic mb-0" #titulo4>  Te ayudamos en tu proceso de navegación dentro de nuestra página ;)</p>
+    <div *ngIf="accesibilidad.habilitarLectura" class="mt-2 mb-0">
+      <app-controles-accesibilidad [textoLectura]="titulo3.innerText + '. ' + titulo4.innerText"> 
+      </app-controles-accesibilidad>
     </div>
-    <div class="mt-2 mb-5">
-        <hr class="fs-4">
-    </div>
-<!-- SECCION DE AYUDA
----------------------
----------------------
----------------------
----------------------
----------------------
----------------------
----------------------
----------------------
----------------------
---------------------- -->
+  </div>
 
-    <div class="mb-5">
-        <ul class="lead fs-5 fw-bold">
-            <li #ayuda0>Registrarse</li>
-        </ul>
-        <p class="lead" #ayudaR0>
-            Para que puedas acceder de manera completa a nuestras recetas es necesario que te registres. <br>
-            Para ello solo te vas a la pestaña de <strong>Cuenta - Registrar cuenta.</strong>
-            Dentro de esta pestaña es necesario llenar todos los campos solicitados, de igual manera, es necesario ingresar una contraseña que no 
-            olvides, dado que aún no es posible recuperar una cuenta. En caso de que olvides la contraseña será necesario crearse otra  cuenta para poder
-            acceder a nuestras recetas. (Disculpa las molestias, estamos trabajando arduamente en resolver este problema:)).
-        </p>
-        <app-controles-accesibilidad
-            [textoLectura]="ayuda0.innerHTML + '. ' + ayudaR0.innerHTML"> 
-        </app-controles-accesibilidad>
-    </div>
+  <div class="mt-2 mb-5">
+    <hr class="fs-4">
+  </div>
 
-    <div class="mb-5">
-        <ul class="lead fs-5 fw-bold">
-            <li #ayuda1>Iniciar sesión</li>
-        </ul>
-        <p class="lead" #ayudaR1>
-            Tenemos 2 maneras para que puedas iniciar sesión. Antes de proceder es necesario y obligatorio haberse registrado para la primera opción. 
-            <br> Como primer método se encuentra la manera "tradicional". Dentro de la pestaña de <strong> Cuenta - Iniciar sesión </strong>, encontrarás un pequeño formulario
-            el cual pide el correo electrónico y la contraseña asociada que se registró previamente. Ingresas dichos datos y para finalizar das clic en el botón 
-            al final del formulario. 
-            <br>La segunda y última opción es también un tipo de registro, con la diferencia de que ahora el inicio de sesión se hará automático. 
-            Para ello, es necesario llenar los campos que se piden. Nombre completo, nombre de usuario y tu número de teléfono. 
-            <br>Para una descripción un poco más detallada sobre esta manera de inicio de sesión, puedes consultar la pregunta <strong>"¿Cómo funciona el sistema de registro por número telefónico?"</strong>
-        </p>
-        <app-controles-accesibilidad
-            [textoLectura]="ayuda1.innerHTML + '. ' + ayudaR1.innerHTML"> 
-        </app-controles-accesibilidad>
-    </div>
+  <!--SECCIÓN DE AYUDA-->
+  <div class="mb-5">
+    <ul class="lead fs-5 fw-bold">
+        <li #ayuda0>Registrarse</li>
+    </ul>
 
-    <div class="mb-5">
-        <ul class="lead fs-5 fw-bold">
-            <li #ayuda2>Acceder al recetario</li>
-        </ul>
-        <p class="lead" #ayudaR2>
-          Para poder acceder al recetario completo es necesario iniciar sesión. Esto es posible mediante la pestaña <strong> Cuenta </strong>.
-          Ahí prodrás encontrar distintas manera de iniciar sesión y, en caso de no tener una cuenta, puedes crearla dentro de la misma pestaña. 
-          <br>Arriba de esta página se encuentra una pregunta la cual indica como iniciar sesión con tu número telefónico. 
-        </p>
-        <app-controles-accesibilidad
-            [textoLectura]="ayuda2.innerHTML + '. ' + ayudaR2.innerHTML"> 
-        </app-controles-accesibilidad>
-    </div>
+    <p class="lead" #ayudaR0>
+      Para que puedas acceder de manera completa a nuestras recetas es necesario que te registres. <br>
+    </p>
 
-    <div class="mb-5">
-        <ul class="lead fs-5 fw-bold">
-            <li #ayuda3>Recetario</li>
-        </ul>
-        <p class="lead" #ayudaR3>
-            El recetario cuenta con variadas recetas de las cuales puedes elegir la que más sea de tu agrado. <br>
-            Siendo usuario de nuestra página, tienes la posibilidad de marcar como <strong>favorito</strong> alguna receta o varias. 
-            Igual tienes la posibilidad de buscar recetas por medio de un identificador(ID), solo tienes que dar clic en el buscador e ingresas el identificador. <br>
-            Deberá aparecerte la receta o, en caso de no exitir, un mensaje de error. 
-        </p>
-        <app-controles-accesibilidad
-            [textoLectura]="ayuda3.innerHTML + '. ' + ayudaR3.innerHTML"> 
-        </app-controles-accesibilidad>
-    </div>
+    <p class="lead" #ayudaR01>
+      Para ello solo te vas a la pestaña de <strong>Cuenta - Registrar cuenta.</strong>
+      Dentro de esta pestaña es necesario llenar todos los campos solicitados, de igual manera, es necesario ingresar una contraseña que no 
+      olvides, dado que aún no es posible recuperar una cuenta. En caso de que olvides la contraseña será necesario crearse otra  cuenta para poder
+      acceder a nuestras recetas. (Disculpa las molestias, estamos trabajando arduamente en resolver este problema).
+    </p>
 
-    <div class="mb-5">
-        <ul class="lead fs-5 fw-bold">
-            <li #ayuda4>Contacto</li>
-        </ul>
-        <p class="lead" #ayudaR4>
-            Cualquier otra duda que te surja durante tu alojamiento dentro nuestra página web puedes mandarnos un correo electrónico
-            a esta dirección: <strong>recetarioweb@outlook.com.</strong> O bien, en la pestaña de <strong>Informción</strong>, dentro de 
-            <strong>Contacto</strong>, te aparece un formulario el cual se envía directo a nuestro correo una vez que lo hayas llenado con tus inquietudes.
-            <br>Estamos completamente atentos ante cualquier inconveniente por el que estes pasando:).
-        </p>
-        <app-controles-accesibilidad
-            [textoLectura]="ayuda4.innerHTML + '. ' + ayudaR4.innerHTML"> 
-        </app-controles-accesibilidad>
-    </div>
+    <app-controles-accesibilidad
+      [textoLectura]="ayuda0.innerHTML + '. ' + ayudaR0.innerHTML + '. ' + ayudaR01.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
 
-    <div class="mb-5">
-        <ul class="lead fs-5 fw-bold">
-            <li #ayuda5>Accesibilidad</li>
-        </ul>
-        <p class="lead" #ayudaR5>
-            Sabemos que para algunas personas ciertas cosas no son posibles, o bien, resulta más facíl comprender las cosas de otra manera. 
-            Es por ello que contamos con un botón (botón con forma de una oreja) que se encuentra en la esquina superior derecha. Este botón te ayuda a leer lo que se encuentra en la pantalla. <br>
-            Una vez que des clic en ese botón, te aparecerán 2 botones debajo de cada texto. El botón azul o botón de play, reproduce una voz que lee por ti o te ayuda a hacerlo. 
-            El botón rojo o de pausa, deja de reproducir la voz en caso de que ya no quieras escucharlo o ya escuchaste lo que necesitabas.
+  <div class="mb-5">
+    <ul class="lead fs-5 fw-bold">
+      <li #ayuda1>Iniciar sesión</li>
+    </ul>
 
-        </p>
-        <app-controles-accesibilidad
-            [textoLectura]="ayuda5.innerHTML + '. ' + ayudaR5.innerHTML"> 
-        </app-controles-accesibilidad>
-    </div>
+    <p class="lead" #ayudaR1>
+      Tenemos 2 maneras para que puedas iniciar sesión. Antes de proceder es necesario y obligatorio haberse registrado para la primera opción. 
+      La segunda y última opción es también un tipo de registro, con la diferencia de que ahora el inicio de sesión se hará automático. 
+      Para ello, es necesario llenar los campos que se piden. Nombre completo, nombre de usuario y tu número de teléfono. 
+    </p>
 
-    <div class="col-12 mb-2">
-        <hr class="fs-4">
-    </div>
+    <p class="lead" #ayudaR11>
+      Como primer método se encuentra la manera "tradicional". Dentro de la pestaña de <strong> Cuenta - Iniciar sesión </strong>, encontrarás un pequeño formulario
+      el cual pide el correo electrónico y la contraseña asociada que se registró previamente. Ingresas dichos datos y para finalizar das clic en el botón 
+      al final del formulario. 
+    </p>
 
-    <div class="col-12">
-        <p #textoFinal>
-          Si tienes más preguntas, contáctanos mediante la pestaña 'Contacto' o el 
-          siguiente correo: recetarioweb@outlook.com. 
-          GRACIAS POR TU PREFERENCIA :)
-        </p>
-        <app-controles-accesibilidad [textoLectura]="textoFinal.innerHTML"> 
-        </app-controles-accesibilidad>
-      </div>
+    <p class="lead" #ayudaR12>
+      Para ello, es necesario llenar los campos que se piden. Nombre completo, nombre de usuario y tu número de teléfono. Para una descripción un poco más detallada 
+      sobre esta manera de inicio de sesión, puedes consultar la pregunta <strong>"¿Cómo funciona el sistema de registro por número telefónico?".</strong>
+    </p>
 
+    <app-controles-accesibilidad
+      [textoLectura]="ayuda1.innerHTML + ' ' + ayudaR1.innerHTML + ' ' + ayudaR11.innerHTML + ' ' + ayudaR12.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
+
+  <div class="mb-5">
+    <ul class="lead fs-5 fw-bold">
+      <li #ayuda2>Acceder al recetario</li>
+    </ul>
+
+    <p class="lead" #ayudaR2>
+      Para poder acceder al recetario completo es necesario iniciar sesión. Esto es posible mediante la pestaña <strong>Cuenta</strong>.
+      Ahí podrás encontrar distintas manera de iniciar sesión y, en caso de no tener una cuenta, puedes crearla dentro de la misma pestaña. 
+      <br>Arriba de esta página se encuentra una pregunta la cual indica como iniciar sesión con tu número telefónico. 
+    </p>
+
+    <app-controles-accesibilidad
+      [textoLectura]="ayuda2.innerHTML + '. ' + ayudaR2.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
+
+  <div class="mb-5">
+    <ul class="lead fs-5 fw-bold">
+      <li #ayuda3>Recetario</li>
+    </ul>
+
+    <p class="lead" #ayudaR3>
+      El recetario cuenta con variadas recetas de las cuales puedes elegir la que más sea de tu agrado.
+      Siendo usuario de nuestra página, tienes la posibilidad de marcar como <strong>favorito</strong> alguna receta o varias. 
+      Igual tienes la posibilidad de buscar recetas por medio de un identificador(ID), solo tienes que dar clic en el buscador e ingresas el identificador.
+      Deberá aparecerte la receta o, en caso de no exitir, un mensaje de error. 
+    </p>
+
+    <app-controles-accesibilidad
+      [textoLectura]="ayuda3.innerHTML + '. ' + ayudaR3.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
+
+  <div class="mb-5">
+    <ul class="lead fs-5 fw-bold">
+      <li #ayuda4>Contacto</li>
+    </ul>
+
+    <p class="lead" #ayudaR4>
+      Cualquier otra duda que te surja durante tu alojamiento dentro nuestra página web puedes mandarnos un correo electrónico
+      a esta dirección: <strong>recetarioweb@outlook.com.</strong> O bien, en la pestaña de <strong>Información</strong>, dentro de 
+      <strong>Contacto</strong>, te aparece un formulario el cual se envía directo a nuestro correo una vez que lo hayas llenado con tus inquietudes.
+      Estamos completamente atentos ante cualquier inconveniente por el que estés pasando. :)
+    </p>
+
+    <app-controles-accesibilidad
+      [textoLectura]="ayuda4.innerHTML + '. ' + ayudaR4.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
+
+  <div class="mb-5">
+    <ul class="lead fs-5 fw-bold">
+        <li #ayuda5>Accesibilidad</li>
+    </ul>
+
+    <p class="lead" #ayudaR5>
+      Sabemos que para algunas personas ciertas cosas no son posibles, o bien, resulta más fácil comprender las cosas de otra manera. 
+      Es por ello que contamos con un botón (botón con forma de una oreja) que se encuentra en la esquina superior derecha. Este botón te ayuda a leer lo que se encuentra en la pantalla.
+      Una vez que des clic en ese botón, te aparecerán 2 botones debajo de cada texto. El botón azul o botón de play, reproduce una voz que lee por ti o te ayuda a hacerlo. 
+      El botón rojo o de pausa, deja de reproducir la voz en caso de que ya no quieras escucharlo o ya escuchaste lo que necesitabas.
+    </p>
+
+    <app-controles-accesibilidad
+      [textoLectura]="ayuda5.innerHTML + '. ' + ayudaR5.innerHTML"> 
+    </app-controles-accesibilidad>
+  </div>
+
+  <div class="col-12 mb-2">
+    <hr class="fs-4">
+  </div>
+
+  <div class="col-12">
+      <p #textoFinal>
+        Si tienes más preguntas, contáctanos mediante la pestaña 'Contacto' o el 
+        siguiente correo: recetarioweb@outlook.com. 
+        GRACIAS POR TU PREFERENCIA. :)
+      </p>
+      <app-controles-accesibilidad [textoLectura]="textoFinal.innerHTML"> 
+      </app-controles-accesibilidad>
+  </div>
 </div>
