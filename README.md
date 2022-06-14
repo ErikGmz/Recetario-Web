@@ -37,3 +37,18 @@ _**Ejecución de la aplicación Angular.**_
 >$ ng serve -o
 >```
 _**Es necesario ejecutar ambas tecnologías para el correcto funcionamiento de la aplicación.**_
+
+## Ejecución del proyecto (modo producción)
+_**Ejecución del servidor Node.**_
+>_**1.** Abrir una terminal en el directorio del proyecto angular e introducir los siguientes comandos:_
+>```
+>$ cd aplicacion-angular
+>$ npm install
+>$ npm run build
+>```
+>_**2.** Desplazarse a la carpeta raíz del proyecto e introducir los siguientes comandos:_
+>```
+>$ cd ..
+>$ npm install
+>$ node index
+>```
