@@ -81,7 +81,7 @@
       </ul>
 
       <div *ngIf="autenticacion.informacionAdicional.permisos !== '' else mostrarSoloAccesibilidad"
-      class="d-flex my-1 mt-lg-0" id="nombre">
+      class="d-flex mt-3 mb-2 my-lg-0" id="nombre">
         <button class="btn btn-danger py-0 px-2 me-3" (click)="accesibilidad.cambiarModoLectura()">
           <i class="bi bi-ear-fill"></i>
         </button>
@@ -93,8 +93,8 @@
       </div>
 
       <ng-template #mostrarSoloAccesibilidad>
-        <div class="d-flex my-1 mt-lg-0">
-          <button class="btn btn-danger py-0 px-2 me-3" (click)="accesibilidad.cambiarModoLectura()">
+        <div class="d-flex mt-3 mb-2 my-lg-0">
+          <button class="btn btn-success py-0 px-2 me-3" (click)="accesibilidad.cambiarModoLectura()">
             <i class="bi bi-ear-fill"></i>
           </button>
         </div>

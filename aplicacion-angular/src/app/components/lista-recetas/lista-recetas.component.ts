@@ -85,7 +85,8 @@ export class ListaRecetasComponent implements OnInit {
         this.favoritosRecetas.set(IDReceta, false);
         let listaRecetas = JSON.parse(localStorage.getItem("informacionExtraUsuario")!);
         listaRecetas.recetasFavoritas.push(IDReceta);
-        localStorage.setItem("informacionExtraUsuario", JSON.stringify(listaRecetas));
+        this.autenticacion.informacionAdicional = listaRecetas;
+        localStorage.setItem("informacionExtraUsuario", JSON.stringify(this.autenticacion.informacionAdicional));
       })
     })
   }
@@ -100,7 +101,8 @@ export class ListaRecetasComponent implements OnInit {
         listaRecetas.recetasFavoritas = listaRecetas.recetasFavoritas.filter((receta: any) => {
           return receta !== IDReceta
         });
-        localStorage.setItem("informacionExtraUsuario", JSON.stringify(listaRecetas));
+        this.autenticacion.informacionAdicional = listaRecetas;
+        localStorage.setItem("informacionExtraUsuario", JSON.stringify(this.autenticacion.informacionAdicional));
       })
     })
   }
