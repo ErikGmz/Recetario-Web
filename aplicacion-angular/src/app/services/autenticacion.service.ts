@@ -138,7 +138,8 @@ export class AutenticacionService {
       recetasFavoritas: []
     }
 
-    this.httpClient.post("/api/usuarios/agregar", datosUsuarioNuevo, {responseType: "text"}).subscribe((datos) => {
+    this.httpClient.post("/api/usuarios/agregar", 
+    datosUsuarioNuevo, {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
     });
   }
@@ -167,7 +168,8 @@ export class AutenticacionService {
   }
 
   eliminarUsuarioBaseDatos(ID: string): boolean {
-    this.httpClient.delete("/api/usuarios/eliminar/" + ID, {responseType: "text"}).subscribe((datos) => {
+    this.httpClient.delete("/api/usuarios/eliminar/" + ID, 
+    {responseType: "text"}).subscribe((datos) => {
       console.log(datos);
     })
     return true;
@@ -241,19 +243,19 @@ export class AutenticacionService {
   }
 
   agregarFavorito(IDusuario: string, IDReceta: string) {
-    return this.httpClient.put("api/usuarios/agregarFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
+    return this.httpClient.put("/api/usuarios/agregarFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
   }
 
   removerFavorito(IDusuario: string, IDReceta: string) {
-    return this.httpClient.put("api/usuarios/removerFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
+    return this.httpClient.put("/api/usuarios/removerFavorito/" + IDusuario, {IDReceta: IDReceta}, {responseType: "text"});
   }
 
   incrementarFavorito(IDReceta: string) {
-    return this.httpClient.put("api/recetas/incrementarFavorito/" + IDReceta, null, {responseType: "text"});
+    return this.httpClient.put("/api/recetas/incrementarFavorito/" + IDReceta, null, {responseType: "text"});
   }
 
   restarFavorito(IDReceta: string) {
-    return this.httpClient.put("api/recetas/restarFavorito/" + IDReceta, null, {responseType: "text"});
+    return this.httpClient.put("/api/recetas/restarFavorito/" + IDReceta, null, {responseType: "text"});
   }
 
   iniciarSesion(correo: string, clave: string) {

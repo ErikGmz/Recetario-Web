@@ -40,7 +40,7 @@ export class ContactoComponent implements OnInit {
       nombreUsuario: nombreUsuario
     }
 
-    this.httpClient.post("api/correos/enviar", elementosCorreo, {responseType: "text"}).subscribe((datos: any) => {
+    this.httpClient.post("/api/correos/enviar", elementosCorreo, {responseType: "text"}).subscribe((datos: any) => {
       console.log(datos);
     });
     alert("El correo fue exitosamente enviado.");
