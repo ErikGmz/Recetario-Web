@@ -48,7 +48,6 @@ _**Ejecución del servidor Node.**_
 >```
 >_**2.** Desplazarse a la carpeta raíz del proyecto e introducir los siguientes comandos:_
 >```
->$ cd ..
 >$ npm install
 >$ node index
 >```
